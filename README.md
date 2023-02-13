@@ -8,6 +8,13 @@
 
 ## Development
 
+Roadmap for feature implementation, known bugs... can be found here : https://trello.com/b/mCsVXtsU/chesscompanion
+
+### Dependencies
+
+- NodeJS v18 + npm
+
+Tested on Ubuntu. Should work on Windows through WSL, but additional setup for the GUI to show up is required.
 
 ### Installation
 
@@ -18,6 +25,10 @@
 
 `npm start` runs the app in the development mode.
 
+Known issues : 
+- On first startup, a race condition causes the app not to be able to start properly (app entrypoint not found). Restarting the app fixes it.
+- Another race condition causes the front-end to not be ready when the window appears. Fixed by reloading the view through the top menu (View > Reload)
+
 ### Build
 
-`npm run build` builds the app for production to the `dist/electron` folder.
+`npm run build` builds the app for "production" to the `dist/electron` folder. Still very unstable and untested.
