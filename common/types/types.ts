@@ -9,12 +9,16 @@ export interface GameData {
     id: string;
     whitePlayer: Player;
     blackPlayer: Player;
-    moves: Move[];
-    selectedMove: number;
+    moves: MoveWithVariants[];
+    selectedMove: number[];
     pgn: string;
     site: string;
     date: string;
     event: string;
     round: string;
     result: string;
+}
+
+export interface MoveWithVariants extends Move {
+    variants?: MoveWithVariants[][];
 }

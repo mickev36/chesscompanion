@@ -6,6 +6,7 @@ import * as cgTypes from 'chessground/types';
 import { gameDataToPgn } from '../../../services/gameDataPgnConversion';
 import { GameData } from '../../../../../common/types/types';
 import PromotionPanel, { PromotionData } from './PromotionPanel/PromotionPanel';
+import { addMove } from '../../../services/gameDataMoves';
 
 interface Props {
     setLoadedGameData: (gameData: GameData) => void;
@@ -53,11 +54,12 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
 
     const saveMove = useCallback(
         (parsedMove: Move) => {
+            const newMoveData = addMove(gameData.moves, gameData.selectedMove, parsedMove);
             const pgn = chess.pgn();
             setLoadedGameData({
                 ...gameData,
-                selectedMove: gameData.moves.length,
-                moves: [...gameData.moves, parsedMove],
+                selectedMove: newMoveData.selectedMove,
+                moves: newMoveData.moves,
                 pgn,
             });
         },
@@ -102,9 +104,6 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
             )}
             <ChessgroundWrapper
                 config={{
-                    viewOnly:
-                        gameData.moves.length !== 0 &&
-                        gameData.selectedMove !== gameData.moves.length - 1,
                     fen: chess.fen(),
                     coordinates: false,
                     check: chess.in_check(),

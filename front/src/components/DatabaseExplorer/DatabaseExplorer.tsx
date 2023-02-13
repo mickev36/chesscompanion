@@ -29,7 +29,7 @@ function DatabaseExplorer({ setLoadedGameData, loadedGameId, changeTab }: Props)
     async function onLoadGame(gameId: string) {
         const gameData = await window.api.call('game:get', gameId);
         changeTab(0);
-        setLoadedGameData({ ...gameData, selectedMove: 0 });
+        setLoadedGameData({ ...gameData, selectedMove: [0] });
     }
 
     function renderAbreviatedPgn(game: GameData) {

@@ -1,4 +1,4 @@
-.move-history {
+.game-navigator {
     padding-right: 1rem;
     display: flex;
     flex-direction: column;
@@ -6,32 +6,27 @@
     height: 100%;
 }
 
-.move-history ul {
-    list-style-type: none;
-    padding: 0;
+.game-navigator .navigator-moves .turn {
+    display: flex;
+    flex-direction: row;
 }
 
-.move-history ul li {
-    display: grid;
-    grid-template-columns: 0.4fr 1fr 1fr;
-}
-
-.move-history ul li .move {
+.game-navigator .navigator-moves .turn .move {
     cursor: pointer;
 }
 
-.move-history ul li .move:hover {
+.game-navigator .navigator-moves .turn .move:hover {
     background-color: rgb(120, 120, 120);
 }
 
-.move-history ul li .turn-counter {
+.game-navigator .navigator-moves .turn .turn-counter {
     flex: 0.1;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.move-history ul .move {
+.game-navigator .navigator-moves .move {
     flex: 0.45;
     display: flex;
     flex-direction: row;
@@ -40,11 +35,11 @@
     margin: 0.1rem;
 }
 
-.move-history ul li div {
+.game-navigator .navigator-moves .turn div {
     padding: 0.5rem;
 }
 
-.move-history .piece-icon {
+.game-navigator .piece-icon {
     background-repeat: no-repeat;
     background-size: contain;
     width: 0.7rem;
@@ -53,25 +48,42 @@
     padding: 0.4rem;
 }
 
-.move-history .move.selected-move {
+.game-navigator .move.selected-move,
+.game-navigator .variant-move.selected-move {
     background-color: rgb(73, 102, 166);
 }
 
-.move-history .move.selected-move:hover {
+.game-navigator .move.selected-move:hover,
+.game-navigator .variant-move.selected-move:hover {
     background-color: rgb(99, 126, 184);
 }
 
-.history-navigator {
+.navigator-moves {
     overflow: scroll;
 }
 
-.history-controls {
+.navigator-controls {
     display: flex;
     justify-content: space-evenly;
 }
 
-.history-controls button {
+.navigator-controls button {
     font-size: 1.6rem;
     padding: 0.5rem;
     border: none;
+}
+
+.variant {
+    display: flex;
+    flex-direction: row;
+}
+
+.variant-move {
+    display: flex;
+    flex-direction: row;
+}
+
+.variant-move:hover {
+    cursor: pointer;
+    background-color: rgb(90, 90, 90);
 }

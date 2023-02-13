@@ -11,7 +11,7 @@ export const newGameData: GameData = {
         title: '',
     },
     moves: [],
-    selectedMove: 0,
+    selectedMove: [0],
     pgn: '',
     site: '',
     date: '',

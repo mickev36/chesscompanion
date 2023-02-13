@@ -1,5 +1,6 @@
 import { Chess } from 'chess.js';
 import { GameData } from '../../../common/types/types';
+import { getVariantFlatList } from './gameDataMoves';
 
 export function gameDataToPgn(gameData: GameData) {
     let outPgn = [];
@@ -13,12 +14,12 @@ export function gameDataToPgn(gameData: GameData) {
     outPgn.push('');
     let SAN = '';
 
-    gameData.moves
-        .slice(0, gameData.selectedMove > 0 ? gameData.selectedMove + 1 : 1)
-        .forEach((move, index) => {
-            if (index % 2 === 0) SAN += index + 1 + '. ';
-            SAN += move.san + ' ';
-        });
+    const moveList = getVariantFlatList(gameData.moves, gameData.selectedMove);
+
+    moveList.forEach((move, index) => {
+        if (index % 2 === 0) SAN += index + 1 + '. ';
+        SAN += move.san + ' ';
+    });
 
     outPgn.push(SAN);
 
@@ -44,7 +45,7 @@ export function pgnToGameData(pgn: string) {
         date: headers.Date || '???',
         site: headers.Site || '???',
         round: headers.Round || '???',
-        selectedMove: moves.length,
+        selectedMove: [moves.length],
         id: '',
         pgn,
         result: headers.Result || '???',
