@@ -1,0 +1,66 @@
+body {
+    background-color: var(--main-bg-color);
+    color: white;
+}
+
+button {
+    color: white;
+    background-color: var(--secondary-bg-color);
+    border: 1px solid white;
+    padding: 0.4rem;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--tertiary-bg-color);
+}
+
+button:active {
+    background-color: var(--secondary-bg-color);
+}
+
+button:disabled,
+button:disabled:hover,
+button:disabled:active {
+    color: var(--tertiary-bg-color);
+    background-color: var(--secondary-bg-color);
+    cursor: not-allowed;
+}
+
+input,
+textarea {
+    background-color: var(--tertiary-bg-color);
+    width: 100%;
+    border: none;
+    color: white;
+}
+
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--primary-bg-color);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--tertiary-bg-color);
+    border-radius: 20px;
+}
+
+*::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-track-piece {
+    background-color: var(--primary-bg-color);
+}
+
+#root {
+    height: 100%;
+}
+
+html,
+body {
+    height: 100%;
+}

@@ -1,0 +1,26 @@
+.database-explorer {
+    background-color: var(--main-bg-color);
+}
+
+.database-explorer table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    border: 3px solid var(--secondary-bg-color);
+}
+
+.database-explorer thead {
+    background-color: var(--secondary-bg-color);
+}
+
+.database-explorer tr {
+    border-bottom: 3px solid var(--secondary-bg-color);
+}
+
+.database-explorer td {
+    padding: 0.4rem;
+}
+
+.database-explorer tbody tr:hover {
+    background-color: var(--tertiary-bg-color);
+}

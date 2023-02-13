@@ -1,0 +1,16 @@
+.react-tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.react-tabs__tab-panel {
+    height: 100%;
+    overflow: hidden;
+}
+
+@media all and (max-width: 1000px) {
+    .react-tabs__tab-panel {
+        overflow: scroll;
+    }
+}

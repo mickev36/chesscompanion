@@ -1,0 +1,23 @@
+.cg-wrap {
+    width: 100%;
+    height: 100%;
+    display: table;
+}
+
+.chessboard {
+    width: 100%;
+    height: 100%;
+}
+
+/* .chess-board .cg-wrap coords.ranks {
+    top: -4%;
+}
+
+.chess-board .cg-wrap coords.files {
+    left: 5%;
+    bottom: 0.4%;
+}
+
+.chess-board .cg-wrap coords {
+    font-size: 0.7rem;
+} */

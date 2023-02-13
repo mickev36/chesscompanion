@@ -1,0 +1,21 @@
+.promotion-panel {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 999;
+    padding: 0;
+    margin: 0;
+}
+
+.promotion-panel .piece-icon {
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    aspect-ratio: 1/1;
+    margin: 0;
+}
+
+.promotion-panel .piece-icon:hover {
+    cursor: pointer;
+}

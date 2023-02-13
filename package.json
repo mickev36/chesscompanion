@@ -1,0 +1,55 @@
+{
+    "name": "chesscompanion",
+    "version": "1.0.0",
+    "description": "",
+    "main": "./dist/back/main.js",
+    "scripts": {
+        "start": "concurrently -n front,tsc,electron \"cd front; npm run start.nobrowser\" \"tsc -w\" \"electron .\"  ",
+        "postinstall": "cd front && npm install",
+        "build": "rm -rf dist/* && tsc && cd front && npm run build && cd .. && DEBUG=electron-builder electron-builder",
+        "build.dryrun": "rm -rf dist/* && tsc && cd front && npm run build && cd .. && DEBUG=electron-builder electron-builder --dir"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mickev36/chesscompanion.git"
+    },
+    "author": "Kévin Michelet",
+    "email": "kevinmichelet91@gmail.com",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/mickev36/chesscompanion/issues"
+    },
+    "homepage": "https://github.com/mickev36/chesscompanion#readme",
+    "build": {
+        "appId": "your.id",
+        "linux": {
+            "maintainer": "Kévin Michelet",
+            "target": [
+                "AppImage",
+                "deb"
+            ]
+        },
+        "files": [
+            "package.json",
+            "dist",
+            "node_modules"
+        ],
+        "directories": {
+            "output": "dist/electron"
+        }
+    },
+    "dependencies": {
+        "chess.js": "^0.13.2",
+        "electron-is-dev": "^2.0.0",
+        "electron-reload": "^2.0.0-alpha.1",
+        "realm": "10.19.1"
+    },
+    "devDependencies": {
+        "@types/chess.js": "^0.13.1",
+        "concurrently": "^7.2.2",
+        "electron": "^19.0.5",
+        "electron-builder": "^23.1.0",
+        "ts-node": "^10.8.1",
+        "typescript": "^4.7.3"
+    }
+}

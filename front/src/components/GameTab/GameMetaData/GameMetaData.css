@@ -1,0 +1,45 @@
+.game-meta-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.player-info {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.player-info textarea,
+.player-info input {
+    resize: none;
+    padding: 0.5rem;
+    margin: 1rem;
+    border-width: 3px;
+    border-style: solid;
+    width: 30%;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.player-info .white-player {
+    color: black;
+    background-color: white;
+    border-color: black;
+}
+
+.player-info .black-player {
+    color: white;
+    background-color: black;
+    border-color: white;
+}
+
+.text-info input,
+.text-info textarea {
+    margin-bottom: 0.5rem;
+}
+
+.game-meta-data .actions {
+    display: flex;
+    justify-content: space-evenly;
+}
