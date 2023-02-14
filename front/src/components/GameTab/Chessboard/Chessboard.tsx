@@ -90,7 +90,7 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
             }
         }
     }, [promotionData, chess, saveMove]);
-    
+
     return (
         <div className="chessboard" ref={chessboardRef}>
             {promotionData && (

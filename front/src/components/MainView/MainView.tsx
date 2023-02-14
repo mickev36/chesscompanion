@@ -11,11 +11,6 @@ function MainView() {
     const [loadedGameData, setLoadedGameData] = useState<GameData>(newGameData);
     const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 
-    function setLoadedGameDataMock(data: GameData) {
-        console.log(data);
-        setLoadedGameData(data);
-    }
-
     return (
         <Tabs selectedIndex={selectedTabIndex} onSelect={setSelectedTabIndex}>
             <TabList>
@@ -24,12 +19,12 @@ function MainView() {
             </TabList>
 
             <TabPanel>
-                <GameTab loadedGameData={loadedGameData} setLoadedGameData={setLoadedGameDataMock} />
+                <GameTab loadedGameData={loadedGameData} setLoadedGameData={setLoadedGameData} />
             </TabPanel>
             <TabPanel>
                 <DatabaseTab
                     loadedGameData={loadedGameData}
-                    setLoadedGameData={setLoadedGameDataMock}
+                    setLoadedGameData={setLoadedGameData}
                     setSelectedTabIndex={setSelectedTabIndex}
                 />
             </TabPanel>
