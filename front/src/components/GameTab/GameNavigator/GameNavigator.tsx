@@ -37,7 +37,7 @@ function GameNavigator({ gameData, setLoadedGameData }: Props) {
     }, [gameData, setLoadedGameData]);
 
     const goToLastMove = useCallback(() => {
-        setLoadedGameData({ ...gameData, selectedMove: gameData.moves.length - 1 });
+        setLoadedGameData({ ...gameData, selectedMove: gameData.moves.length });
     }, [gameData, setLoadedGameData]);
 
     useEffect(() => {
@@ -77,28 +77,28 @@ function GameNavigator({ gameData, setLoadedGameData }: Props) {
     function formatMoves(moves: Move[]) {
         let output = [];
         let data = [...moves];
-        for (let turnCounter = 0; data.length; ++turnCounter) {
+        for (let turnCounter = 1; data.length; ++turnCounter) {
             output.push(
                 <li key={turnCounter}>
-                    <div className="turn-counter">{turnCounter + 1}.</div>
+                    <div className="turn-counter">{turnCounter}.</div>
                     <div
                         className={
-                            gameData.selectedMove === 2 * turnCounter
+                            gameData.selectedMove === 2 * turnCounter - 1
                                 ? 'selected-move move'
                                 : 'move'
                         }
-                        onClick={() => onRewind(2 * turnCounter)}
+                        onClick={() => onRewind(2 * turnCounter - 1)}
                     >
                         {formatMove(data.shift())}
                     </div>
                     {data[0] && (
                         <div
                             className={
-                                gameData.selectedMove === 2 * turnCounter + 1
+                                gameData.selectedMove === 2 * turnCounter
                                     ? 'selected-move move'
                                     : 'move'
                             }
-                            onClick={() => onRewind(2 * turnCounter + 1)}
+                            onClick={() => onRewind(2 * turnCounter)}
                         >
                             {data.length > 0 && formatMove(data.shift())}
                         </div>

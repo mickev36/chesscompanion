@@ -14,7 +14,7 @@ export function gameDataToPgn(gameData: GameData) {
     let SAN = '';
 
     gameData.moves
-        .slice(0, gameData.selectedMove > 0 ? gameData.selectedMove + 1 : 1)
+        .slice(0, gameData.selectedMove)
         .forEach((move, index) => {
             if (index % 2 === 0) SAN += index + 1 + '. ';
             SAN += move.san + ' ';

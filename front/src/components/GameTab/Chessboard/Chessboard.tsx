@@ -56,7 +56,7 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
             const pgn = chess.pgn();
             setLoadedGameData({
                 ...gameData,
-                selectedMove: gameData.moves.length,
+                selectedMove: gameData.moves.length + 1,
                 moves: [...gameData.moves, parsedMove],
                 pgn,
             });
@@ -90,7 +90,7 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
             }
         }
     }, [promotionData, chess, saveMove]);
-
+    
     return (
         <div className="chessboard" ref={chessboardRef}>
             {promotionData && (
@@ -104,7 +104,7 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
                 config={{
                     viewOnly:
                         gameData.moves.length !== 0 &&
-                        gameData.selectedMove !== gameData.moves.length - 1,
+                        gameData.selectedMove !== gameData.moves.length,
                     fen: chess.fen(),
                     coordinates: false,
                     check: chess.in_check(),
