@@ -15,6 +15,10 @@ interface Props {
     setPromotionData: (promotionData: PromotionData) => void;
 }
 
+function columnLetterToNumber(letter: string) {
+    return letter.charCodeAt(0) - 97;
+}
+
 const PromotionPanel = React.forwardRef(
     ({ promotionData, setPromotionData }: Props, chessboardRef: any) => {
         const [promotionPanelData, setPromotionPanelData] = useState<any>({
@@ -32,9 +36,11 @@ const PromotionPanel = React.forwardRef(
                 width: 0,
             };
 
+            const promotionColumnNumber = columnLetterToNumber(promotionData.move.to[0]);
+
             setPromotionPanelData({
                 colorPromoting: promotionData.color,
-                x: renderedBoardData.x + 2 * (renderedBoardData.width / 8),
+                x: renderedBoardData.x + promotionColumnNumber * (renderedBoardData.width / 8),
                 y: renderedBoardData.y,
                 squareSize: renderedBoardData.width / 8,
             });
