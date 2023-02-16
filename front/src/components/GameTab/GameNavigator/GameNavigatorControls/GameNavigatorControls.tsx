@@ -31,6 +31,7 @@ function GameNavigatorControls({ gameData, setLoadedGameData }: Props) {
     }, [gameData, setLoadedGameData]);
 
     const deleteFromHere = useCallback(() => {
+        if (!window.confirm('Are you sure ?')) return;
         setLoadedGameData({
             ...gameData,
             moves: gameData.moves.slice(0, gameData.selectedMove),
