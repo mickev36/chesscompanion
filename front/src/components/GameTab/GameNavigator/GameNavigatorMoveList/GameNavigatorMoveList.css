@@ -1,0 +1,59 @@
+.game-navigator__move-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.game-navigator__move-list ul li {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr 1fr;
+}
+
+.game-navigator__move-list ul li .move {
+    cursor: pointer;
+}
+
+.game-navigator__move-list ul li .move:hover {
+    background-color: rgb(120, 120, 120);
+}
+
+.game-navigator__move-list ul li .turn-counter {
+    flex: 0.1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-navigator__move-list ul .move {
+    flex: 0.45;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    background-color: rgb(90, 90, 90);
+    margin: 0.1rem;
+}
+
+.game-navigator__move-list ul li div {
+    padding: 0.5rem;
+}
+
+.game-navigator__move-list .piece-icon {
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin: 0;
+    padding: 0.4rem;
+}
+
+.game-navigator__move-list .move.selected-move {
+    background-color: rgb(73, 102, 166);
+}
+
+.game-navigator__move-list .move.selected-move:hover {
+    background-color: rgb(99, 126, 184);
+}
+
+.game-navigator__move-list {
+    overflow: scroll;
+}
+
