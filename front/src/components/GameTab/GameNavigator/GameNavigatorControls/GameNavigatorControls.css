@@ -1,7 +1,6 @@
 
 .game-navigator__controls {
-    display: flex;
-    justify-content: space-evenly;
+    display: block;
 }
 
 .game-navigator__controls button {
@@ -9,3 +8,9 @@
     padding: 0.5rem;
     border: none;
 }
+
+.game-navigator__controls__arrows {
+    display: flex;
+    justify-content: space-evenly;
+}
+

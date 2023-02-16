@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import './GameNavigatorControls.css';
-import { MdFastRewind, MdArrowBack, MdArrowForward, MdFastForward } from 'react-icons/md';
+import { MdFastRewind, MdArrowBack, MdArrowForward, MdFastForward, MdDelete } from 'react-icons/md';
 import { GameData } from '../../../../../../common/types/types';
 
 interface Props {
@@ -30,6 +30,13 @@ function GameNavigatorControls({ gameData, setLoadedGameData }: Props) {
         setLoadedGameData({ ...gameData, selectedMove: gameData.moves.length });
     }, [gameData, setLoadedGameData]);
 
+    const deleteFromHere = useCallback(() => {
+        setLoadedGameData({
+            ...gameData,
+            moves: gameData.moves.slice(0, gameData.selectedMove),
+        });
+    }, [gameData, setLoadedGameData, canGoToPreviousMove]);
+
     useEffect(() => {
         const handleKeyPress = (event: any) => {
             if (event.key === 'ArrowLeft') goToPreviousMove();
@@ -46,18 +53,25 @@ function GameNavigatorControls({ gameData, setLoadedGameData }: Props) {
 
     return (
         <div className="game-navigator__controls">
-            <button disabled={!canGoToPreviousMove} onClick={goToFirstMove}>
-                <MdFastRewind />
-            </button>
-            <button disabled={!canGoToPreviousMove} onClick={goToPreviousMove}>
-                <MdArrowBack />
-            </button>
-            <button disabled={!canGoToNextMove} onClick={goToNextMove}>
-                <MdArrowForward />
-            </button>
-            <button disabled={!canGoToNextMove} onClick={goToLastMove}>
-                <MdFastForward />
-            </button>
+            <div className="game-navigator__controls__arrows">
+                <button disabled={!canGoToPreviousMove} onClick={goToFirstMove}>
+                    <MdFastRewind />
+                </button>
+                <button disabled={!canGoToPreviousMove} onClick={goToPreviousMove}>
+                    <MdArrowBack />
+                </button>
+                <button disabled={!canGoToNextMove} onClick={goToNextMove}>
+                    <MdArrowForward />
+                </button>
+                <button disabled={!canGoToNextMove} onClick={goToLastMove}>
+                    <MdFastForward />
+                </button>
+            </div>
+            <div className="game-navigator__controls__actions">
+                <button onClick={deleteFromHere}>
+                    <MdDelete />
+                </button>
+            </div>
         </div>
     );
 }
