@@ -11,6 +11,7 @@ interface Props {
     loadedGameData: GameData;
 }
 function GameTab({ setLoadedGameData, loadedGameData }: Props) {
+
     return (
         <div className="game-tab">
             <div className="panel panel-game-metadata">

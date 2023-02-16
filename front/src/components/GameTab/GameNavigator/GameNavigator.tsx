@@ -41,7 +41,7 @@ function GameNavigator({ gameData, setLoadedGameData }: Props) {
     }, [gameData, setLoadedGameData]);
 
     const goToLastMove = useCallback(() => {
-        setLoadedGameData({ ...gameData, selectedMove: [gameData.moves.length - 1] });
+        setLoadedGameData({ ...gameData, selectedMove: [gameData.moves.length] });
     }, [gameData, setLoadedGameData]);
 
     useEffect(() => {
