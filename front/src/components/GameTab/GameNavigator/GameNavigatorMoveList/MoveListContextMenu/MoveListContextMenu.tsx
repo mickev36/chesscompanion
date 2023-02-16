@@ -3,12 +3,12 @@ import './GameNavigatorContextMenu.css';
 
 interface Props {}
 
-function GameNavigatorContextMenu({}: Props) {
+function MoveListContextMenu({}: Props) {
     return (
-        <div className="gameNavigatorContextMenu">
+        <div className="move-list__context-menu">
             <div className="contextMenuEntry">Delete from here</div>
         </div>
     );
 }
 
-export default GameNavigatorContextMenu;
+export default MoveListContextMenu;
