@@ -13,12 +13,10 @@ export function gameDataToPgn(gameData: GameData) {
     outPgn.push('');
     let SAN = '';
 
-    gameData.moves
-        .slice(0, gameData.selectedMove)
-        .forEach((move, index) => {
-            if (index % 2 === 0) SAN += index + 1 + '. ';
-            SAN += move.san + ' ';
-        });
+    gameData.moves.slice(0, gameData.selectedMove).forEach((move, index) => {
+        if (index % 2 === 0) SAN += index + 1 + '. ';
+        SAN += move.san + ' ';
+    });
 
     outPgn.push(SAN);
 
@@ -45,6 +43,7 @@ export function pgnToGameData(pgn: string) {
         site: headers.Site || '???',
         round: headers.Round || '???',
         selectedMove: moves.length,
+        boardOrientation: true,
         id: '',
         pgn,
         result: headers.Result || '???',

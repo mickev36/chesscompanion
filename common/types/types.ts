@@ -17,4 +17,5 @@ export interface GameData {
     event: string;
     round: string;
     result: string;
+    boardOrientation: boolean;
 }

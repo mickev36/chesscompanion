@@ -1,6 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import './GameNavigatorControls.css';
-import { MdFastRewind, MdArrowBack, MdArrowForward, MdFastForward, MdDelete } from 'react-icons/md';
+import {
+    MdFastRewind,
+    MdArrowBack,
+    MdArrowForward,
+    MdFastForward,
+    MdDelete,
+    MdRotateLeft,
+} from 'react-icons/md';
 import { GameData } from '../../../../../../common/types/types';
 
 interface Props {
@@ -36,7 +43,14 @@ function GameNavigatorControls({ gameData, setLoadedGameData }: Props) {
             ...gameData,
             moves: gameData.moves.slice(0, gameData.selectedMove),
         });
-    }, [gameData, setLoadedGameData, canGoToPreviousMove]);
+    }, [gameData, setLoadedGameData]);
+
+    const rotateBoard = useCallback(() => {
+        setLoadedGameData({
+            ...gameData,
+            boardOrientation: !gameData.boardOrientation,
+        });
+    }, [gameData, setLoadedGameData]);
 
     useEffect(() => {
         const handleKeyPress = (event: any) => {
@@ -71,6 +85,9 @@ function GameNavigatorControls({ gameData, setLoadedGameData }: Props) {
             <div className="game-navigator__controls__actions">
                 <button onClick={deleteFromHere}>
                     <MdDelete />
+                </button>
+                <button onClick={rotateBoard}>
+                    <MdRotateLeft />
                 </button>
             </div>
         </div>

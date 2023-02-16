@@ -121,6 +121,7 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
                     events: {
                         move: moveHandler,
                     },
+                    orientation: gameData.boardOrientation ? 'white' : 'black',
                 }}
             />
         </div>

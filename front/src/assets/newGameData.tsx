@@ -11,6 +11,7 @@ export const newGameData: GameData = {
         title: '',
     },
     moves: [],
+    boardOrientation: true,
     selectedMove: 0,
     pgn: '',
     site: '',
