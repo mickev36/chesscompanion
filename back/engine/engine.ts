@@ -33,7 +33,7 @@ export async function engineEval(FEN) {
     return resultEmitter;
 }
 
-export function stopAnalyzing() {
+export function engineStop() {
     engine.stop();
 }
 

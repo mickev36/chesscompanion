@@ -1,0 +1,13 @@
+.engine-view {
+    background-color: #444444;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem;
+}
+
+.engine-view__eval {
+    display: flex;
+    color: white;
+    align-items: center;
+    font-size: 2rem;
+}

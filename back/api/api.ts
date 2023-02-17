@@ -1,5 +1,5 @@
 import { addGame, deleteGame, getAllGames, getGame, updateGame } from '../games/games';
-import { initEngine, engineEval } from '../engine/engine';
+import { initEngine, engineEval, engineStop } from '../engine/engine';
 import { ipcMain } from 'electron';
 
 export async function initApi(rendererWindow) {
@@ -36,6 +36,10 @@ export async function initApi(rendererWindow) {
         evalStream.on('data', evalData => {
             rendererWindow.send('engineData', evalData);
         });
+    });
+
+    ipcMain.handle('engine:stop', async (event, FEN) => {
+        engineStop();
     });
 
     // setInterval(() => {

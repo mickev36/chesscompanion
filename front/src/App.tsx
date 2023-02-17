@@ -3,12 +3,7 @@ import './App.css';
 import './assets/colors.css';
 import './assets/pieces.css';
 
-import MainView from './components/MainView/MainView';
-
-window.api.onEngineMessage((event, data) => {
-    console.log('Received Engine message');
-    console.log(data);
-});
+import MainView from './views/MainView/MainView';
 
 function App() {
     return <MainView />;

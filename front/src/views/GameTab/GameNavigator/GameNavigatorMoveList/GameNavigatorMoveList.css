@@ -55,5 +55,5 @@
 
 .game-navigator__move-list {
     overflow: scroll;
+    height: 100%;
 }
-
