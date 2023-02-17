@@ -2,9 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import './EngineView.css';
 import { GameData } from '../../../../../../common/types/types';
-import { Chess, ChessInstance, Move, Square } from 'chess.js';
 import Toggle from '../../../../components/Toggle/Toggle';
-import { gameDataToPgn } from '../../../../services/gameDataPgnConversion';
 
 interface Props {
     gameData: GameData;
