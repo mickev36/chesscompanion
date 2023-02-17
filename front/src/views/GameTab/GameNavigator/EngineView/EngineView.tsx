@@ -21,11 +21,14 @@ function EngineView({ gameData, setLoadedGameData }: Props) {
 
     const onToggleEngine = (status: boolean) => {
         setEngineStatus(status);
-        // if (status) { // TODO : Reuse chess instance ?
-        //     const chess = new Chess();
-        //     chess.load_pgn(gameDataToPgn(gameData));
-
-        // }
+        if (status) {
+            // TODO : Reuse chess instance ?
+            const chess = new Chess();
+            chess.load_pgn(gameDataToPgn(gameData));
+            window.api.call('engine:eval', chess.fen());
+        } else {
+            window.api.call('engine:stop');
+        }
     };
 
     return (
