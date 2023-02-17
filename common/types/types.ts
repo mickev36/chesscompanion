@@ -12,6 +12,7 @@ export interface GameData {
     moves: Move[];
     selectedMove: number;
     pgn: string;
+    fen: string;
     site: string;
     date: string;
     event: string;

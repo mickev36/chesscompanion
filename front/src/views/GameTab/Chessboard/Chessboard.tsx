@@ -53,12 +53,12 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
 
     const saveMove = useCallback(
         (parsedMove: Move) => {
-            const pgn = chess.pgn();
             setLoadedGameData({
                 ...gameData,
                 selectedMove: gameData.moves.length + 1,
                 moves: [...gameData.moves, parsedMove],
-                pgn,
+                pgn: chess.pgn(),
+                fen: chess.fen(),
             });
         },
         [chess, gameData, setLoadedGameData]
