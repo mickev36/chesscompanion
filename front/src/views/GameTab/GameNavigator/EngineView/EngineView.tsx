@@ -21,7 +21,7 @@ function EngineView({ gameData, setLoadedGameData }: Props) {
 
     const onToggleEngine = (status: boolean) => {
         setEngineStatus(status);
-        // if (status) {
+        // if (status) { // TODO : Reuse chess instance ?
         //     const chess = new Chess();
         //     chess.load_pgn(gameDataToPgn(gameData));
 
