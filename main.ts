@@ -4,6 +4,7 @@ import { initDbConnection } from './back/db/dbConnection';
 import isDev from 'electron-is-dev';
 import electronReload from 'electron-reload';
 import path from 'path';
+import { ipcRenderer } from 'electron';
 
 if (isDev) {
     electronReload(__dirname, {
@@ -11,8 +12,10 @@ if (isDev) {
     });
 }
 
+let win;
+
 const createWindow = () => {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -31,7 +34,7 @@ const createWindow = () => {
 app.whenReady().then(async () => {
     createWindow();
     await initDbConnection();
-    initApi();
+    await initApi(win);
 });
 
 app.on('window-all-closed', () => {

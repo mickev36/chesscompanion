@@ -1,7 +1,9 @@
 import { addGame, deleteGame, getAllGames, getGame, updateGame } from '../games/games';
+import { initEngine, engineEval } from '../engine/engine';
 import { ipcMain } from 'electron';
 
-export function initApi() {
+export async function initApi(rendererWindow) {
+    await initEngine();
     ipcMain.handle('games:getall', async event => {
         return getAllGames()
             .toJSON()
@@ -28,4 +30,16 @@ export function initApi() {
         const insertedId = addGame(gameData);
         return insertedId;
     });
+
+    ipcMain.handle('engine:eval', async (event, FEN) => {
+        const evalStream = await engineEval(FEN);
+        evalStream.on('data', evalData => {
+            rendererWindow.send('engineData', evalData);
+        });
+    });
+
+    // setInterval(() => {
+    //     console.log('sending');
+    //     rendererWindow.webContents.send('engineData', { toto: 'testing' });
+    // }, 5000);
 }
