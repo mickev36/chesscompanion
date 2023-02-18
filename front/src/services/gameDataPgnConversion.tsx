@@ -46,6 +46,7 @@ export function pgnToGameData(pgn: string) {
         boardOrientation: true,
         id: '',
         pgn,
+        fen: chessjs.fen(),
         result: headers.Result || '???',
     };
 }
