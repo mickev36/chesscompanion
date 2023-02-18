@@ -14,6 +14,7 @@ export const newGameData: GameData = {
     boardOrientation: true,
     selectedMove: 0,
     pgn: '',
+    fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
     site: '',
     date: '',
     event: '',
