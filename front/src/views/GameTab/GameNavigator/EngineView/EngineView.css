@@ -1,6 +1,11 @@
 .engine-view {
     background-color: #444444;
     display: flex;
+    flex-direction: column;
+}
+
+.engine-view__overview {
+    display: flex;
     justify-content: space-between;
     padding: 0.8rem;
 }
@@ -10,4 +15,19 @@
     color: white;
     align-items: center;
     font-size: 2rem;
+}
+
+.engine-view__lines {
+    display: flex;
+    flex-direction: column;
+}
+
+.engine-line {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    max-width: 15rem;
+    margin-bottom: 1rem;
+    white-space: nowrap;
 }

@@ -20,3 +20,19 @@ export interface GameData {
     result: string;
     boardOrientation: boolean;
 }
+
+export interface EngineData {
+    depth: number;
+    seldepth: number;
+    time: number;
+    nodes: number;
+    hashfull: number;
+    nps: number;
+    tbhits: number;
+    score: {
+        unit: string;
+        value: number;
+    };
+    multipv: number;
+    pv: string;
+}
