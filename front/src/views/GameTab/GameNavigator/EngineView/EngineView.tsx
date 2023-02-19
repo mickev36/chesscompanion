@@ -5,43 +5,12 @@ import { EngineData, GameData } from '../../../../../../common/types/types';
 import Toggle from '../../../../components/Toggle/Toggle';
 
 interface Props {
-    gameData: GameData;
-    setLoadedGameData: (gameData: GameData) => void;
+    engineData: EngineData[];
+    engineStatus: boolean;
+    onToggleEngine: (status: boolean) => void;
 }
 
-function sortEngineLines(line1: EngineData, line2: EngineData) {
-    if (line1.score.unit === 'mate') {
-        if (line2.score.unit === 'mate') {
-            return line1.score.value <= line2.score.value ? 1 : -1;
-        } else {
-            return -1;
-        }
-    }
-    if (line2.score.unit === 'mate') {
-        return 1;
-    }
-    return line1.score.value <= line2.score.value ? 1 : -1;
-}
-
-function EngineView({ gameData, setLoadedGameData }: Props) {
-    const [engineStatus, setEngineStatus] = useState<boolean>(false);
-    const [engineData, setEngineData] = useState<EngineData[]>([]);
-
-    useEffect(() => {
-        window.api.onEngineMessage((event, data) => {
-            setEngineData(data.sort(sortEngineLines));
-        });
-    });
-
-    const onToggleEngine = (status: boolean) => {
-        setEngineStatus(status);
-        if (status) {
-            window.api.call('engine:eval', gameData.fen);
-        } else {
-            window.api.call('engine:stop');
-        }
-    };
-
+function EngineView({ engineData, engineStatus, onToggleEngine }: Props) {
     const renderEngineLines = () => {
         return engineData.map((engineLine, index) => {
             return (
