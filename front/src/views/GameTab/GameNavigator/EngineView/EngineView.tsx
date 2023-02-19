@@ -43,9 +43,9 @@ function EngineView({ gameData, setLoadedGameData }: Props) {
     };
 
     const renderEngineLines = () => {
-        return engineData.map(engineLine => {
+        return engineData.map((engineLine, index) => {
             return (
-                <span className="engine-line">
+                <span key={index} className="engine-line">
                     {engineLine.score.unit === 'mate' ? 'M' : ''}
                     {engineLine.score.unit === 'cp' && engineLine.score.value > 0 ? '+' : ''}
                     {engineLine.score.unit === 'mate'

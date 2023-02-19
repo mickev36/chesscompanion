@@ -13,7 +13,7 @@ export async function initEngine() {
 }
 
 export async function engineEval(FEN) {
-    //TODO : stop previous eval
+    engine.stop();
     engine.ucinewgame();
     await engine.position(FEN);
     const engineOutput = engine.goInfinite();
