@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './DatabaseTab.css';
 
 import { GameData } from '../../../../common/types/types';
-import DatabaseExplorer from '../DatabaseExplorer/DatabaseExplorer';
+import DatabaseExplorer from './DatabaseExplorer/DatabaseExplorer';
 
 interface Props {
     setLoadedGameData: (gameData: GameData) => void;

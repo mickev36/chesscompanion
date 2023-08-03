@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GameData } from '../../../../common/types/types';
+import { GameData } from '../../../../../common/types/types';
 import { FaFolderOpen, FaTrash } from 'react-icons/fa';
 import './DatabaseExplorer.css';
 
