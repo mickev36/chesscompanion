@@ -1,6 +1,10 @@
 function SettingsTab() {
-    function onSelectDatabase() {}
-    function onLoadEngine() {}
+    function onSelectDatabase(event: any) {
+        window.api.call('settings:set', { dbPath: event.target.files[0].path });
+    }
+    function onLoadEngine(event: any) {
+        window.api.call('settings:set', { enginePath: event.target.files[0].path });
+    }
 
     return (
         <div className="settings-tab">

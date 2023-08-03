@@ -1,6 +1,7 @@
 import { addGame, deleteGame, getAllGames, getGame, updateGame } from '../games/games';
 import { initEngine, engineEval, engineStop } from '../engine/engine';
 import { ipcMain } from 'electron';
+import { getSettings, setSettings } from '../settings/settings';
 
 export async function initApi(rendererWindow) {
     await initEngine();
@@ -40,6 +41,14 @@ export async function initApi(rendererWindow) {
 
     ipcMain.handle('engine:stop', async (event, FEN) => {
         engineStop();
+    });
+
+    ipcMain.handle('settings:set', async (event, settings) => {
+        setSettings(settings);
+    });
+
+    ipcMain.handle('settings:get', async event => {
+        return getSettings();
     });
 
     // setInterval(() => {

@@ -33,7 +33,7 @@ function GameNavigator({ gameData, setLoadedGameData }: Props) {
         window.api.onEngineMessage((event, data) => {
             setEngineData(data.sort(sortEngineLines));
         });
-    });
+    }, []);
 
     const onToggleEngine = (status: boolean) => {
         setEngineStatus(status);
