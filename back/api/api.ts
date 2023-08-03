@@ -2,8 +2,9 @@ import { addGame, deleteGame, getAllGames, getGame, updateGame } from '../games/
 import { initEngine, engineEval, engineStop } from '../engine/engine';
 import { ipcMain } from 'electron';
 import { getSettings, setSettings } from '../settings/settings';
+import { rendererWindow } from '../renderer/renderer';
 
-export async function initApi(rendererWindow) {
+export async function initApi() {
     await initEngine();
     ipcMain.handle('games:getall', async event => {
         return getAllGames()
