@@ -6,6 +6,7 @@ import { newGameData } from '../../assets/newGameData';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatabaseTab from '../DatabaseTab/DatabaseTab';
+import SettingsTab from '../SettingsTab/SettingsTab';
 
 function MainView() {
     const [loadedGameData, setLoadedGameData] = useState<GameData>(newGameData);
@@ -16,6 +17,7 @@ function MainView() {
             <TabList>
                 <Tab>Game</Tab>
                 <Tab>Database</Tab>
+                <Tab>Settings</Tab>
             </TabList>
 
             <TabPanel>
@@ -27,6 +29,9 @@ function MainView() {
                     setLoadedGameData={setLoadedGameData}
                     setSelectedTabIndex={setSelectedTabIndex}
                 />
+            </TabPanel>
+            <TabPanel>
+                <SettingsTab />
             </TabPanel>
         </Tabs>
     );
