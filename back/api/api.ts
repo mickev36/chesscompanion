@@ -51,9 +51,4 @@ export async function initApi() {
     ipcMain.handle('settings:get', async event => {
         return getSettings();
     });
-
-    // setInterval(() => {
-    //     console.log('sending');
-    //     rendererWindow.webContents.send('engineData', { toto: 'testing' });
-    // }, 5000);
 }
