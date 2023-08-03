@@ -1,4 +1,12 @@
+import { useEffect } from 'react';
+
 function SettingsTab() {
+    useEffect(() => {
+        window.api.onSettings((event, data) => {
+            console.log(data);
+        });
+    }, []);
+
     function onSelectDatabase(event: any) {
         window.api.call('settings:set', { dbPath: event.target.files[0].path });
     }
