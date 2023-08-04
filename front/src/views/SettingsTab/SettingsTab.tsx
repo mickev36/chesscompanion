@@ -1,12 +1,7 @@
-import { useEffect } from 'react';
+import { useAppContext } from '../../context/AppContext';
 
 function SettingsTab() {
-    useEffect(() => {
-        window.api.onSettings((event, data) => {
-            console.log(data);
-        });
-    }, []);
-
+    const { settings } = useAppContext();
     function onSelectDatabase(event: any) {
         window.api.call('settings:set', { dbPath: event.target.files[0].path });
     }
@@ -16,17 +11,22 @@ function SettingsTab() {
 
     return (
         <div className="settings-tab">
-            <button>
-                <label htmlFor="loadDatabase" className="pgn-upload-button">
-                    Load database
-                </label>
-            </button>
-
-            <button>
-                <label htmlFor="loadEngine" className="pgn-upload-button">
-                    Load engine for analysis
-                </label>
-            </button>
+            <div className="settings-row">
+                <button>
+                    <label htmlFor="loadDatabase" className="pgn-upload-button">
+                        Load database
+                    </label>
+                </button>
+                {settings.dbPath}
+            </div>
+            <div className="settings-row">
+                <button>
+                    <label htmlFor="loadEngine" className="pgn-upload-button">
+                        Load engine for analysis
+                    </label>
+                </button>
+                {settings.enginePath}
+            </div>
 
             <input type="file" id="loadDatabase" onChange={onSelectDatabase} />
 

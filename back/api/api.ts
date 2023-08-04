@@ -47,4 +47,8 @@ export async function initApi() {
     ipcMain.handle('settings:set', async (event, settings) => {
         setSettings(settings);
     });
+
+    ipcMain.handle('settings:get', async event => {
+        return getSettings();
+    });
 }
