@@ -85,7 +85,7 @@ function GameMetaData() {
                 PGN
                 <textarea rows={4} value={gameData.pgn} onChange={onChangeGamePgn} />
                 FEN
-                <textarea rows={4} value={gameData.fen} />
+                <textarea rows={4} value={gameData.fen} readOnly />
             </div>
             <div className="actions">
                 <button onClick={onNewGame}>
