@@ -1,10 +1,12 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { AppConfig, GameData, Settings } from '../../../common/types/types';
+import { AppConfig, GameData, GameDataState } from '../../../common/types/types';
 import { newGameData } from '../assets/newGameData';
+import { Chess } from 'chess.js';
+import { gameDataToPgn } from '../services/gameDataPgnConversion';
 
 interface AppContextType {
-    gameData: GameData;
-    setGameData: React.Dispatch<React.SetStateAction<GameData>>;
+    gameData: GameDataState;
+    setGameData: (gameData: GameData) => void;
     config: AppConfig;
     analysisEnabled: boolean;
     setAnalysisEnabled: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,7 +27,7 @@ export const AppContext = createContext<AppContextType>({
 });
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-    const [gameData, setGameData] = useState<GameData>(newGameData);
+    const [gameData, setGameDataState] = useState<GameDataState>(newGameData);
     const [config, setConfig] = useState<AppConfig>({ engineStatus: false });
     const [analysisEnabled, setAnalysisEnabled] = useState<boolean>(false);
 
@@ -43,6 +45,13 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
             setConfig(config);
         });
     }, []);
+
+    function setGameData(gameData: GameData) {
+        const chess = new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+        // Reset chess.js to selected turn
+        chess.load_pgn(gameDataToPgn(gameData));
+        setGameDataState({ ...gameData, currentPosition: chess });
+    }
 
     const context: AppContextType = {
         gameData,

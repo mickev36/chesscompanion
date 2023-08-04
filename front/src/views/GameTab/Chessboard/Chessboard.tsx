@@ -1,32 +1,26 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './Chessboard.css';
-import { Chess, ChessInstance, Move, Square } from 'chess.js';
+import { Move, Square } from 'chess.js';
 import ChessgroundWrapper from './ChessgroundWrapper';
 import * as cgTypes from 'chessground/types';
-import { gameDataToPgn } from '../../../services/gameDataPgnConversion';
 import PromotionPanel, { PromotionData } from './PromotionPanel/PromotionPanel';
 import { useAppContext } from '../../../context/AppContext';
 
 function Chessboard() {
     const { gameData, setGameData } = useAppContext();
 
-    const [chess] = useState<ChessInstance>(
-        new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
-    );
-
     const [promotionData, setPromotionData] = useState<PromotionData | null>(null);
 
     const chessboardRef = useRef<HTMLDivElement>(null);
 
-    // Reset chess.js to selected turn
-    chess.load_pgn(gameDataToPgn(gameData));
-
     //Generate the list of legal moves
-    const legalMoves = chess.moves({ verbose: true }).reduce((acc: any, move) => {
-        if (acc.has(move.from)) acc.set(move.from, [...acc.get(move.from), move.to]);
-        else acc.set(move.from, [move.to]);
-        return acc;
-    }, new Map<cgTypes.Key, cgTypes.Key[]>());
+    const legalMoves = gameData.currentPosition
+        .moves({ verbose: true })
+        .reduce((acc: any, move) => {
+            if (acc.has(move.from)) acc.set(move.from, [...acc.get(move.from), move.to]);
+            else acc.set(move.from, [move.to]);
+            return acc;
+        }, new Map<cgTypes.Key, cgTypes.Key[]>());
 
     function moveHandler(orig: cgTypes.Key, dest: cgTypes.Key, capturedPiece?: cgTypes.Piece) {
         const from = orig as Square;
@@ -35,12 +29,12 @@ function Chessboard() {
         if (checkPromotion(from, to)) {
             //Promoting
             setPromotionData({
-                color: chess.turn(),
+                color: gameData.currentPosition.turn(),
                 move: { from, to },
                 selectedPiece: null,
             });
         } else {
-            let parsedMove = chess.move({ from, to });
+            let parsedMove = gameData.currentPosition.move({ from, to });
 
             if (parsedMove) {
                 saveMove(parsedMove);
@@ -54,15 +48,14 @@ function Chessboard() {
                 ...gameData,
                 selectedMove: gameData.moves.length + 1,
                 moves: [...gameData.moves, parsedMove],
-                pgn: chess.pgn(),
-                fen: chess.fen(),
+                pgn: gameData.currentPosition.pgn(),
             });
         },
-        [chess, gameData, setGameData]
+        [gameData, setGameData]
     );
 
     function checkPromotion(from: Square, to: Square) {
-        const beforeMove = chess.get(from);
+        const beforeMove = gameData.currentPosition.get(from);
         return (
             beforeMove?.type === 'p' &&
             ((beforeMove.color === 'w' && from[1] === '7' && to[1] === '8') ||
@@ -77,16 +70,16 @@ function Chessboard() {
             let from = promotionData.move.from,
                 to = promotionData.move.to,
                 piece = promotionData.selectedPiece;
-            if (chess.get(promotionData.move.to) != null) {
+            if (gameData.currentPosition.get(promotionData.move.to) != null) {
                 //Promotion while capturing a piece
-                parsedMove = chess.move(`${from[0]}x${to}=${piece}`);
-            } else parsedMove = chess.move(`${to}=${piece}`);
+                parsedMove = gameData.currentPosition.move(`${from[0]}x${to}=${piece}`);
+            } else parsedMove = gameData.currentPosition.move(`${to}=${piece}`);
             if (parsedMove) {
                 saveMove(parsedMove);
                 setPromotionData(null);
             }
         }
-    }, [promotionData, chess, saveMove]);
+    }, [promotionData, saveMove, gameData.currentPosition]);
 
     return (
         <div className="chessboard" ref={chessboardRef}>
@@ -102,10 +95,10 @@ function Chessboard() {
                     viewOnly:
                         gameData.moves.length !== 0 &&
                         gameData.selectedMove !== gameData.moves.length,
-                    fen: chess.fen(),
+                    fen: gameData.currentPosition.fen(),
                     coordinates: false,
-                    check: chess.in_check(),
-                    turnColor: chess.turn() === 'w' ? 'white' : 'black',
+                    check: gameData.currentPosition.in_check(),
+                    turnColor: gameData.currentPosition.turn() === 'w' ? 'white' : 'black',
                     movable: {
                         free: false,
                         dests: legalMoves,

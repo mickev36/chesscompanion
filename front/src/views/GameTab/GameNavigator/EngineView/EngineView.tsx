@@ -18,7 +18,7 @@ function EngineView() {
     const onToggleEngine = (status: boolean) => {
         setAnalysisEnabled(status);
         if (status) {
-            window.api.call('engine:eval', gameData.fen);
+            window.api.call('engine:eval', gameData.currentPosition.fen());
         } else {
             window.api.call('engine:stop');
         }

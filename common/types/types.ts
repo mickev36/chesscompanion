@@ -1,4 +1,4 @@
-import { Move } from 'chess.js';
+import { ChessInstance, Move } from 'chess.js';
 
 interface Player {
     name: string;
@@ -12,13 +12,16 @@ export interface GameData {
     moves: Move[];
     selectedMove: number;
     pgn: string;
-    fen: string;
     site: string;
     date: string;
     event: string;
     round: string;
     result: string;
     boardOrientation: boolean;
+}
+
+export interface GameDataState extends GameData {
+    currentPosition: ChessInstance;
 }
 
 export interface EngineData {

@@ -1,6 +1,7 @@
-import { GameData } from '../../../common/types/types';
+import { Chess } from 'chess.js';
+import { GameDataState } from '../../../common/types/types';
 
-export const newGameData: GameData = {
+export const newGameData: GameDataState = {
     id: '',
     whitePlayer: {
         name: 'White',
@@ -14,10 +15,10 @@ export const newGameData: GameData = {
     boardOrientation: true,
     selectedMove: 0,
     pgn: '',
-    fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
     site: '',
     date: '',
     event: '',
     round: '',
     result: '',
+    currentPosition: new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'),
 };
