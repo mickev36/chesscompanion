@@ -1,20 +1,26 @@
 import { Engine } from 'node-uci';
 import { EventEmitter } from 'node:events';
-//const exePath = '/home/mickev/dev/chesscompanion/stockfish/stockfish-ubuntu-20.04-x86-64-modern';
-const exePath = '/home/mickev/dev/chesscompanion/stockfish/test.txt';
+import { getConfig, updateRendererConfig } from '../config/config';
 let engine;
 
 const resultEmitter = new EventEmitter();
 
+export let engineStatus = false;
+
 export async function initEngine() {
-    engine = new Engine(exePath);
+    const engineExePath = getConfig().enginePath;
+    engineStatus = false;
+    engine = new Engine(engineExePath);
     try {
         await engine.init();
         await engine.setoption('MultiPV', '3');
         await engine.isready();
+        engineStatus = true;
         //console.log("engine ready", engine.id, engine.options);
     } catch (e) {
         console.log('Error loading analysis engine');
+    } finally {
+        updateRendererConfig();
     }
 }
 

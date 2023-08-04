@@ -1,11 +1,11 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { GameData, Settings } from '../../../common/types/types';
+import { AppConfig, GameData, Settings } from '../../../common/types/types';
 import { newGameData } from '../assets/newGameData';
 
 interface AppContextType {
     gameData: GameData;
     setGameData: React.Dispatch<React.SetStateAction<GameData>>;
-    settings: Settings;
+    config: AppConfig;
 }
 
 export function useAppContext() {
@@ -15,32 +15,34 @@ export function useAppContext() {
 export const AppContext = createContext<AppContextType>({
     gameData: newGameData,
     setGameData: () => null,
-    settings: {},
+    config: {
+        engineStatus: false,
+    },
 });
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const [gameData, setGameData] = useState<GameData>(newGameData);
-    const [settings, setSettings] = useState<Settings>({});
+    const [config, setConfig] = useState<AppConfig>({ engineStatus: false });
 
     //On App Load, fetch the stored settings
     useEffect(() => {
-        window.api.onSettings((event, data) => {
-            setSettings(data);
+        window.api.onConfig((event, data) => {
+            setConfig(data);
         });
 
         const fetchSettings = async () => {
-            return await window.api.call('settings:get');
+            return await window.api.call('config:get');
         };
 
-        fetchSettings().then(storedSettings => {
-            setSettings(storedSettings);
+        fetchSettings().then(config => {
+            setConfig(config);
         });
     }, []);
 
     const context: AppContextType = {
         gameData,
         setGameData,
-        settings,
+        config,
     };
 
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

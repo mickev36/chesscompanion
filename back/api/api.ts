@@ -1,7 +1,7 @@
 import { addGame, deleteGame, getAllGames, getGame, updateGame } from '../games/games';
 import { initEngine, engineEval, engineStop } from '../engine/engine';
 import { ipcMain } from 'electron';
-import { getSettings, setSettings } from '../settings/settings';
+import { getConfig, setSettings } from '../config/config';
 import { rendererWindow } from '../renderer/renderer';
 
 export async function initApi() {
@@ -43,11 +43,11 @@ export async function initApi() {
         engineStop();
     });
 
-    ipcMain.handle('settings:set', async (event, settings) => {
+    ipcMain.handle('config:set', async (event, settings) => {
         setSettings(settings);
     });
 
-    ipcMain.handle('settings:get', async event => {
-        return getSettings();
+    ipcMain.handle('config:get', async event => {
+        return getConfig();
     });
 }

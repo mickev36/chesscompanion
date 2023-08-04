@@ -1,12 +1,12 @@
 import { useAppContext } from '../../context/AppContext';
 
 function SettingsTab() {
-    const { settings } = useAppContext();
+    const { config } = useAppContext();
     function onSelectDatabase(event: any) {
-        window.api.call('settings:set', { dbPath: event.target.files[0].path });
+        window.api.call('config:set', { dbPath: event.target.files[0].path });
     }
     function onLoadEngine(event: any) {
-        window.api.call('settings:set', { enginePath: event.target.files[0].path });
+        window.api.call('config:set', { enginePath: event.target.files[0].path });
     }
 
     return (
@@ -17,7 +17,7 @@ function SettingsTab() {
                         Load database
                     </label>
                 </button>
-                {settings.dbPath}
+                {config.dbPath}
             </div>
             <div className="settings-row">
                 <button>
@@ -25,7 +25,8 @@ function SettingsTab() {
                         Load engine for analysis
                     </label>
                 </button>
-                {settings.enginePath}
+                {config.enginePath}
+                {config.engineStatus ? 'Ready' : 'Not ready'}
             </div>
 
             <input type="file" id="loadDatabase" onChange={onSelectDatabase} />
