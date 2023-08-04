@@ -6,9 +6,8 @@ import Toggle from '../../../../components/Toggle/Toggle';
 import { useAppContext } from '../../../../context/AppContext';
 
 function EngineView() {
-    const { gameData } = useAppContext();
+    const { gameData, analysisEnabled, setAnalysisEnabled } = useAppContext();
     const [engineData, setEngineData] = useState<EngineData[]>([]);
-    const [engineStatus, setEngineStatus] = useState<boolean>(false);
 
     useEffect(() => {
         window.api.onEngineMessage((event, data) => {
@@ -17,7 +16,7 @@ function EngineView() {
     }, []);
 
     const onToggleEngine = (status: boolean) => {
-        setEngineStatus(status);
+        setAnalysisEnabled(status);
         if (status) {
             window.api.call('engine:eval', gameData.fen);
         } else {
@@ -66,7 +65,7 @@ function EngineView() {
         <div className="engine-view">
             <div className="engine-view__overview">
                 <div className="engine-view__eval">{renderEvaluation()}</div>
-                <Toggle status={engineStatus} onChangeStatus={onToggleEngine} />
+                <Toggle status={analysisEnabled} onChangeStatus={onToggleEngine} />
             </div>
             <div className="engine-view__lines">{renderEngineLines()}</div>
         </div>

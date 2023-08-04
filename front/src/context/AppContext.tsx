@@ -6,6 +6,8 @@ interface AppContextType {
     gameData: GameData;
     setGameData: React.Dispatch<React.SetStateAction<GameData>>;
     config: AppConfig;
+    analysisEnabled: boolean;
+    setAnalysisEnabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function useAppContext() {
@@ -18,11 +20,14 @@ export const AppContext = createContext<AppContextType>({
     config: {
         engineStatus: false,
     },
+    analysisEnabled: false,
+    setAnalysisEnabled: () => null,
 });
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const [gameData, setGameData] = useState<GameData>(newGameData);
     const [config, setConfig] = useState<AppConfig>({ engineStatus: false });
+    const [analysisEnabled, setAnalysisEnabled] = useState<boolean>(false);
 
     //On App Load, fetch the stored settings
     useEffect(() => {
@@ -43,6 +48,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         gameData,
         setGameData,
         config,
+        analysisEnabled,
+        setAnalysisEnabled,
     };
 
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
