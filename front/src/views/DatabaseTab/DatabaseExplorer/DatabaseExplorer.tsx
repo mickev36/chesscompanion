@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { GameData } from '../../../../../common/types/types';
 import { FaFolderOpen, FaTrash } from 'react-icons/fa';
 import './DatabaseExplorer.css';
+import { useAppContext } from '../../../context/AppContext';
 
 interface Props {
-    setLoadedGameData: (gameData: GameData) => void;
-    loadedGameId: string;
     changeTab: (index: number) => void;
 }
 
-function DatabaseExplorer({ setLoadedGameData, loadedGameId, changeTab }: Props) {
+function DatabaseExplorer({ changeTab }: Props) {
+    const { gameData, setGameData } = useAppContext();
+    const loadedGameId = gameData.id;
+
     const [games, setGames] = useState<GameData[]>([]);
 
     useEffect(() => {
@@ -29,7 +31,7 @@ function DatabaseExplorer({ setLoadedGameData, loadedGameId, changeTab }: Props)
     async function onLoadGame(gameId: string) {
         const gameData = await window.api.call('game:get', gameId);
         changeTab(0);
-        setLoadedGameData({ ...gameData, selectedMove: gameData.moves.length });
+        setGameData({ ...gameData, selectedMove: gameData.moves.length });
     }
 
     function renderAbreviatedPgn(game: GameData) {

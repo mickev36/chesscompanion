@@ -1,17 +1,14 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './GameNavigator.css';
 import GameNavigatorControls from './GameNavigatorControls/GameNavigatorControls';
 import GameNavigatorMoveList from './GameNavigatorMoveList/GameNavigatorMoveList';
-import { EngineData, GameData } from '../../../../../common/types/types';
+import { EngineData } from '../../../../../common/types/types';
 import EngineView from './EngineView/EngineView';
+import { useAppContext } from '../../../context/AppContext';
 
-interface Props {
-    gameData: GameData;
-    setLoadedGameData: (gameData: GameData) => void;
-}
-
-function GameNavigator({ gameData, setLoadedGameData }: Props) {
+function GameNavigator() {
+    const { gameData } = useAppContext();
     const [engineStatus, setEngineStatus] = useState<boolean>(false);
     const [engineData, setEngineData] = useState<EngineData[]>([]);
 
@@ -51,8 +48,8 @@ function GameNavigator({ gameData, setLoadedGameData }: Props) {
                 engineStatus={engineStatus}
                 onToggleEngine={onToggleEngine}
             />
-            <GameNavigatorMoveList setLoadedGameData={setLoadedGameData} gameData={gameData} />
-            <GameNavigatorControls setLoadedGameData={setLoadedGameData} gameData={gameData} />
+            <GameNavigatorMoveList />
+            <GameNavigatorControls />
         </div>
     );
 }

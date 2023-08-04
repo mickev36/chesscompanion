@@ -4,27 +4,18 @@ import './GameTab.css';
 import Chessboard from './Chessboard/Chessboard';
 import GameMetaData from './GameMetaData/GameMetaData';
 import GameNavigator from './GameNavigator/GameNavigator';
-import { GameData } from '../../../../common/types/types';
 
-interface Props {
-    setLoadedGameData: (gameData: GameData) => void;
-    loadedGameData: GameData;
-}
-function GameTab({ setLoadedGameData, loadedGameData }: Props) {
-
+function GameTab() {
     return (
         <div className="game-tab">
             <div className="panel panel-game-metadata">
-                <GameMetaData
-                    setLoadedGameData={setLoadedGameData}
-                    loadedGameData={loadedGameData}
-                />
+                <GameMetaData />
             </div>
             <div className="panel-chess-board">
-                <Chessboard gameData={loadedGameData} setLoadedGameData={setLoadedGameData} />
+                <Chessboard />
             </div>
             <div className="panel panel-game-navigator">
-                <GameNavigator gameData={loadedGameData} setLoadedGameData={setLoadedGameData} />
+                <GameNavigator />
             </div>
         </div>
     );

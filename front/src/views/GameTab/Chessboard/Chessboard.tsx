@@ -4,15 +4,12 @@ import { Chess, ChessInstance, Move, Square } from 'chess.js';
 import ChessgroundWrapper from './ChessgroundWrapper';
 import * as cgTypes from 'chessground/types';
 import { gameDataToPgn } from '../../../services/gameDataPgnConversion';
-import { GameData } from '../../../../../common/types/types';
 import PromotionPanel, { PromotionData } from './PromotionPanel/PromotionPanel';
+import { useAppContext } from '../../../context/AppContext';
 
-interface Props {
-    setLoadedGameData: (gameData: GameData) => void;
-    gameData: GameData;
-}
+function Chessboard() {
+    const { gameData, setGameData } = useAppContext();
 
-function Chessboard({ setLoadedGameData, gameData }: Props) {
     const [chess] = useState<ChessInstance>(
         new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
     );
@@ -53,7 +50,7 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
 
     const saveMove = useCallback(
         (parsedMove: Move) => {
-            setLoadedGameData({
+            setGameData({
                 ...gameData,
                 selectedMove: gameData.moves.length + 1,
                 moves: [...gameData.moves, parsedMove],
@@ -61,7 +58,7 @@ function Chessboard({ setLoadedGameData, gameData }: Props) {
                 fen: chess.fen(),
             });
         },
-        [chess, gameData, setLoadedGameData]
+        [chess, gameData, setGameData]
     );
 
     function checkPromotion(from: Square, to: Square) {

@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import { Move } from 'chess.js';
-import { GameData } from '../../../../../../common/types/types';
 import './GameNavigatorMoveList.css';
+import { useAppContext } from '../../../../context/AppContext';
 
 const pieceMapping = {
     p: 'pawn',
@@ -12,12 +12,9 @@ const pieceMapping = {
     b: 'bishop',
 };
 
-interface Props {
-    gameData: GameData;
-    setLoadedGameData: (gameData: GameData) => void;
-}
+function GameNavigatorMoveList() {
+    const { gameData, setGameData } = useAppContext();
 
-function GameNavigatorMoveList({ gameData, setLoadedGameData }: Props) {
     function formatMove(move: Move | undefined) {
         if (!move) return <></>;
 
@@ -35,7 +32,7 @@ function GameNavigatorMoveList({ gameData, setLoadedGameData }: Props) {
     }
 
     function onRewind(id: number) {
-        setLoadedGameData({ ...gameData, selectedMove: id });
+        setGameData({ ...gameData, selectedMove: id });
     }
 
     function formatMoves(moves: Move[]) {
