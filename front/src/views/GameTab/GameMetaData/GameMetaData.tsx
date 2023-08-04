@@ -84,6 +84,8 @@ function GameMetaData() {
                 <input type="text" value={gameData.round} onChange={setRound} />
                 PGN
                 <textarea rows={4} value={gameData.pgn} onChange={onChangeGamePgn} />
+                FEN
+                <textarea rows={4} value={gameData.fen} />
             </div>
             <div className="actions">
                 <button onClick={onNewGame}>
