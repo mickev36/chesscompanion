@@ -1,9 +1,10 @@
 import { Engine } from 'node-uci';
 import { EventEmitter } from 'node:events';
 import { getConfig, updateRendererConfig } from '../config/config';
+import { rendererWindow } from '../renderer/renderer';
 let engine;
 
-const resultEmitter = new EventEmitter();
+let engineOutputEmitter;
 
 export let engineStatus = false;
 
@@ -32,25 +33,25 @@ export async function engineEval(FEN) {
 
     engine.ucinewgame();
     await engine.position(FEN);
-    const engineOutput = engine.goInfinite();
+    engineOutputEmitter = engine.goInfinite();
 
     let resultData = [];
 
-    engineOutput.on('data', data => {
+    engineOutputEmitter.on('data', data => {
         if (data.multipv) {
             if (data.multipv == 1) {
-                resultEmitter.emit('data', resultData);
+                rendererWindow.send('engineData', resultData);
                 resultData = [data];
             } else {
                 resultData.push(data);
             }
         }
     });
-    return resultEmitter;
 }
 
 export function engineStop() {
     engine.stop();
+    engineOutputEmitter.removeAllListeners();
 }
 
 export async function quitEngine() {

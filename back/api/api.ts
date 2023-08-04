@@ -38,10 +38,7 @@ export async function initApi() {
     });
 
     ipcMain.handle('engine:eval', async (event, FEN) => {
-        const evalStream = await engineEval(FEN);
-        evalStream.on('data', evalData => {
-            rendererWindow.send('engineData', evalData);
-        });
+        engineEval(FEN);
     });
 
     ipcMain.handle('engine:stop', async (event, FEN) => {
