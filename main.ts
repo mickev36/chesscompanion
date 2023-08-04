@@ -4,6 +4,7 @@ import { initDbConnection } from './back/db/dbConnection';
 import isDev from 'electron-is-dev';
 import electronReload from 'electron-reload';
 import { createWindow } from './back/renderer/renderer';
+import { initEngine } from './back/engine/engine';
 
 if (isDev) {
     electronReload(__dirname, {
@@ -12,9 +13,10 @@ if (isDev) {
 }
 
 app.whenReady().then(async () => {
-    createWindow();
     await initDbConnection();
     await initApi();
+    await initEngine();
+    createWindow();
 });
 
 app.on('window-all-closed', () => {

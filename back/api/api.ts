@@ -5,7 +5,6 @@ import { getSettings, setSettings } from '../settings/settings';
 import { rendererWindow } from '../renderer/renderer';
 
 export async function initApi() {
-    await initEngine();
     ipcMain.handle('games:getall', async event => {
         return getAllGames()
             .toJSON()

@@ -41,3 +41,7 @@ export interface Settings {
     dbPath?: string;
     enginePath?: string;
 }
+
+export interface AppConfig extends Settings {
+    engineStatus: boolean;
+}
