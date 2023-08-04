@@ -36,3 +36,8 @@ export interface EngineData {
     multipv: number;
     pv: string;
 }
+
+export interface Settings {
+    dbPath?: string;
+    enginePath?: string;
+}

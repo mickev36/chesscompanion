@@ -1,5 +1,5 @@
 import Store from 'electron-store';
-import { Settings } from '../types/types';
+import { Settings } from '../../common/types/types';
 
 const store = new Store();
 
