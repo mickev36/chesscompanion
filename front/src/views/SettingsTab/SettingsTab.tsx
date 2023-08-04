@@ -6,7 +6,7 @@ function SettingsTab() {
         window.api.call('config:set', { dbPath: event.target.files[0].path });
     }
     function onLoadEngine(event: any) {
-        window.api.call('config:set', { enginePath: event.target.files[0].path });
+        window.api.call('engine:updatePath', event.target.files[0].path);
     }
 
     return (

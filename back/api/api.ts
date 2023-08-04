@@ -32,6 +32,11 @@ export async function initApi() {
         return insertedId;
     });
 
+    ipcMain.handle('engine:updatePath', async (event, enginePath) => {
+        setSettings({ enginePath });
+        initEngine();
+    });
+
     ipcMain.handle('engine:eval', async (event, FEN) => {
         const evalStream = await engineEval(FEN);
         evalStream.on('data', evalData => {

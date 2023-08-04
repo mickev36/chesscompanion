@@ -8,8 +8,9 @@ const resultEmitter = new EventEmitter();
 export let engineStatus = false;
 
 export async function initEngine() {
-    const engineExePath = getConfig().enginePath;
     engineStatus = false;
+    if (engineStatus) await engine.quit();
+    const engineExePath = getConfig().enginePath;
     engine = new Engine(engineExePath);
     try {
         await engine.init();
@@ -25,7 +26,10 @@ export async function initEngine() {
 }
 
 export async function engineEval(FEN) {
-    engine.stop();
+    try {
+        await engine.stop();
+    } catch (e) {}
+
     engine.ucinewgame();
     await engine.position(FEN);
     const engineOutput = engine.goInfinite();
