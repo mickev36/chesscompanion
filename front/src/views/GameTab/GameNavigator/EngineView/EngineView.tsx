@@ -1,16 +1,44 @@
 import React, { useEffect, useState } from 'react';
 
 import './EngineView.css';
-import { EngineData, GameData } from '../../../../../../common/types/types';
+import { EngineData } from '../../../../../../common/types/types';
 import Toggle from '../../../../components/Toggle/Toggle';
+import { useAppContext } from '../../../../context/AppContext';
 
-interface Props {
-    engineData: EngineData[];
-    engineStatus: boolean;
-    onToggleEngine: (status: boolean) => void;
-}
+function EngineView() {
+    const { gameData } = useAppContext();
+    const [engineData, setEngineData] = useState<EngineData[]>([]);
+    const [engineStatus, setEngineStatus] = useState<boolean>(false);
 
-function EngineView({ engineData, engineStatus, onToggleEngine }: Props) {
+    useEffect(() => {
+        window.api.onEngineMessage((event, data) => {
+            setEngineData(data.sort(sortEngineLines));
+        });
+    }, []);
+
+    const onToggleEngine = (status: boolean) => {
+        setEngineStatus(status);
+        if (status) {
+            window.api.call('engine:eval', gameData.fen);
+        } else {
+            window.api.call('engine:stop');
+        }
+    };
+
+    function sortEngineLines(line1: EngineData, line2: EngineData) {
+        if (line1.score.unit === 'mate') {
+            if (line2.score.unit === 'mate') {
+                return line1.score.value <= line2.score.value ? 1 : -1;
+            } else {
+                return -1;
+            }
+        }
+        if (line2.score.unit === 'mate') {
+            return 1;
+        }
+        return line1.score.value <= line2.score.value ? 1 : -1;
+    }
+
     const renderEngineLines = () => {
         return engineData.map((engineLine, index) => {
             return (
