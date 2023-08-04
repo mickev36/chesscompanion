@@ -4,7 +4,7 @@ import { getConfig, updateRendererConfig } from '../config/config';
 import { rendererWindow } from '../renderer/renderer';
 let engine;
 
-let engineOutputEmitter;
+let engineOutputEmitter: EventEmitter;
 
 export let engineStatus = false;
 
@@ -28,7 +28,7 @@ export async function initEngine() {
 
 export async function engineEval(FEN) {
     try {
-        await engine.stop();
+        await engineStop();
     } catch (e) {}
 
     engine.ucinewgame();
@@ -49,8 +49,8 @@ export async function engineEval(FEN) {
     });
 }
 
-export function engineStop() {
-    engine.stop();
+export async function engineStop() {
+    await engine.stop();
     engineOutputEmitter.removeAllListeners();
 }
 
