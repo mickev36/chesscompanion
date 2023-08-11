@@ -2,6 +2,7 @@ import Store from 'electron-store';
 import { AppConfig, Settings } from '../../common/types/types';
 import { engineStatus } from '../engine/engine';
 import { rendererWindow } from '../renderer/renderer';
+import _ from 'lodash';
 
 const store = new Store();
 
@@ -10,9 +11,9 @@ export function getConfig() {
 }
 
 export function setSettings(newSettings: Settings) {
-    const currentSettings = store.get('settings') as Settings;
-    const mergedSettings = { ...currentSettings, ...newSettings };
-    store.set('settings', mergedSettings);
+    const settings = store.get('settings') as Settings;
+    _.merge(settings, newSettings);
+    store.set('settings', settings);
     updateRendererConfig();
 }
 
@@ -21,9 +22,10 @@ export function updateRendererConfig() {
 }
 
 function generateConfig() {
-    const storedSettings = store.get('settings') as Settings;
+    const settings = store.get('settings') as Settings;
+    _.merge(settings, {
+        engine: { status: engineStatus },
+    });
 
-    const config: AppConfig = { ...storedSettings, engineStatus };
-
-    return config;
+    return settings;
 }

@@ -20,7 +20,9 @@ export const AppContext = createContext<AppContextType>({
     gameData: newGameData,
     setGameData: () => null,
     config: {
-        engineStatus: false,
+        engine: {
+            status: false,
+        },
     },
     analysisEnabled: false,
     setAnalysisEnabled: () => null,
@@ -28,7 +30,11 @@ export const AppContext = createContext<AppContextType>({
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const [gameData, setGameDataState] = useState<GameDataState>(newGameData);
-    const [config, setConfig] = useState<AppConfig>({ engineStatus: false });
+    const [config, setConfig] = useState<AppConfig>({
+        engine: {
+            status: false,
+        },
+    });
     const [analysisEnabled, setAnalysisEnabled] = useState<boolean>(false);
 
     //On App Load, fetch the stored settings

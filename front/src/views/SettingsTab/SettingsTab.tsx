@@ -25,8 +25,8 @@ function SettingsTab() {
                         Load engine for analysis
                     </label>
                 </button>
-                {config.enginePath}
-                {config.engineStatus ? 'Ready' : 'Not ready'}
+                {config.engine.path}
+                {config.engine.status ? 'Ready' : 'Not ready'}
             </div>
 
             <input type="file" id="loadDatabase" onChange={onSelectDatabase} />

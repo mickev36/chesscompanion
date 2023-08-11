@@ -33,7 +33,7 @@ export async function initApi() {
     });
 
     ipcMain.handle('engine:updatePath', async (event, enginePath) => {
-        setSettings({ enginePath });
+        setSettings({ engine: { path: enginePath } });
         initEngine();
     });
 

@@ -11,7 +11,8 @@ export let engineStatus = false;
 export async function initEngine() {
     engineStatus = false;
     if (engineStatus) await engine.quit();
-    const engineExePath = getConfig().enginePath;
+    const engineExePath = getConfig().engine.path;
+    if (!engineExePath) return;
     engine = new Engine(engineExePath);
     try {
         await engine.init();

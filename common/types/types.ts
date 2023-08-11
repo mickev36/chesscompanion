@@ -42,9 +42,13 @@ export interface EngineData {
 
 export interface Settings {
     dbPath?: string;
-    enginePath?: string;
+    engine: {
+        path?: string;
+    };
 }
 
-export interface AppConfig extends Settings {
-    engineStatus: boolean;
-}
+export type AppConfig = Settings & {
+    engine: {
+        status: boolean;
+    };
+};
