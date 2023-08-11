@@ -1,8 +1,7 @@
 import { addGame, deleteGame, getAllGames, getGame, updateGame } from '../games/games';
-import { initEngine, engineEval, engineStop } from '../engine/engine';
+import { initEngine, infiniteAnalysis, engineStop } from '../engine/engine';
 import { ipcMain } from 'electron';
 import { getConfig, setSettings } from '../config/config';
-import { rendererWindow } from '../renderer/renderer';
 
 export async function initApi() {
     ipcMain.handle('games:getall', async event => {
@@ -38,7 +37,11 @@ export async function initApi() {
     });
 
     ipcMain.handle('engine:eval', async (event, FEN) => {
-        engineEval(FEN);
+        infiniteAnalysis(FEN, true);
+    });
+
+    ipcMain.handle('engine:position', async (event, FEN) => {
+        infiniteAnalysis(FEN, false);
     });
 
     ipcMain.handle('engine:stop', async (event, FEN) => {

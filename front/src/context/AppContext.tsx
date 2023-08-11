@@ -57,7 +57,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         // Reset chess.js to selected turn
         chess.load_pgn(gameDataToPgn(gameData));
         setGameDataState({ ...gameData, currentPosition: chess });
-        // TODO: if analysis enabled, send position for evaluation
+        if (analysisEnabled) window.api.call('engine:position', chess.fen());
     }
 
     const context: AppContextType = {

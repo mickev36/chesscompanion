@@ -3,7 +3,7 @@ import { EventEmitter } from 'node:events';
 import { getConfig, updateRendererConfig } from '../config/config';
 import { rendererWindow } from '../renderer/renderer';
 
-let engine;
+let engine: Engine & { id?: { name: string; author: string } };
 let engineOutputEmitter: EventEmitter;
 
 const defaultEngineConfig = {
@@ -34,14 +34,18 @@ export async function initEngine() {
     }
 }
 
-export async function engineEval(FEN) {
+export async function infiniteAnalysis(FEN, isNewGame) {
     try {
         await engineStop();
     } catch (e) {}
 
-    engine.ucinewgame();
+    if (isNewGame) {
+        await engine.ucinewgame();
+    }
+
+    await engine.isready();
     await engine.position(FEN);
-    engineOutputEmitter = engine.goInfinite();
+    engineOutputEmitter = engine.goInfinite({});
 
     let resultData = [];
 
