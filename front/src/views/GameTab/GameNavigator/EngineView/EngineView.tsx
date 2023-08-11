@@ -75,10 +75,10 @@ function EngineView() {
             <div className="engine-view__meta">{config.engine.name}</div>
 
             <div className="engine-view__overview">
-                <div className="engine-view__eval">{renderEvaluation()}</div>
+                <div className="engine-view__eval">{analysisEnabled && renderEvaluation()}</div>
                 <Toggle status={analysisEnabled} onChangeStatus={onToggleEngine} />
             </div>
-            <div className="engine-view__lines">{renderEngineLines()}</div>
+            <div className="engine-view__lines">{analysisEnabled && renderEngineLines()}</div>
         </div>
     );
 }

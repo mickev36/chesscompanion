@@ -2,6 +2,7 @@
     background-color: #444444;
     display: flex;
     flex-direction: column;
+    padding: 0.5rem;
 }
 
 .engine-view__overview {
