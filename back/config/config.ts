@@ -17,7 +17,7 @@ export function setSettings(newSettings: Settings) {
 }
 
 export function updateRendererConfig() {
-    if (rendererWindow) rendererWindow.send('settings', generateConfig());
+    if (rendererWindow) rendererWindow.send('config', generateConfig());
 }
 
 function generateConfig() {
