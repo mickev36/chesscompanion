@@ -1,5 +1,5 @@
 import Store from 'electron-store';
-import { AppConfig, Settings } from '../../common/types/types';
+import { Settings } from '../../common/types/types';
 import { engineConfig } from '../engine/engine';
 import { rendererWindow } from '../renderer/renderer';
 import _ from 'lodash';

@@ -6,6 +6,7 @@ import Toggle from '../../../../components/Toggle/Toggle';
 import { useAppContext } from '../../../../context/AppContext';
 
 function EngineView() {
+    const { config } = useAppContext();
     const { gameData, analysisEnabled, setAnalysisEnabled } = useAppContext();
     const [engineData, setEngineData] = useState<EngineData[]>([]);
 
@@ -61,8 +62,18 @@ function EngineView() {
         }${bestLine.score.unit === 'mate' ? bestLine.score.value : bestLine.score.value / 100}`;
     };
 
+    if (!config.engine.status) {
+        return (
+            <div className="engine-view">
+                <div className="engine-view__meta">No analysis engine detected.</div>
+            </div>
+        );
+    }
+
     return (
         <div className="engine-view">
+            <div className="engine-view__meta">{config.engine.name}</div>
+
             <div className="engine-view__overview">
                 <div className="engine-view__eval">{renderEvaluation()}</div>
                 <Toggle status={analysisEnabled} onChangeStatus={onToggleEngine} />

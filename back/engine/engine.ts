@@ -6,18 +6,21 @@ import { rendererWindow } from '../renderer/renderer';
 let engine;
 let engineOutputEmitter: EventEmitter;
 
-export let engineConfig = {
+const defaultEngineConfig = {
     status: false,
-    name: undefined,
+    name: null,
 };
 
+export let engineConfig = { ...defaultEngineConfig };
+
 export async function initEngine() {
-    engineConfig.status = false;
+    engineConfig = { ...defaultEngineConfig };
     if (engineConfig.status) await engine.quit();
     const engineExePath = getConfig().engine.path;
-    if (!engineExePath) return;
-    engine = new Engine(engineExePath);
+
     try {
+        if (!engineExePath) throw 'No engine path';
+        engine = new Engine(engineExePath);
         await engine.init();
         await engine.setoption('MultiPV', '3');
         await engine.isready();
@@ -25,7 +28,7 @@ export async function initEngine() {
         engineConfig.name = engine.id.name;
         //console.log("engine ready", engine.id, engine.options);
     } catch (e) {
-        console.log('Error loading analysis engine');
+        console.log('Error loading analysis engine : ' + e);
     } finally {
         updateRendererConfig();
     }
