@@ -1,6 +1,6 @@
 import Store from 'electron-store';
 import { AppConfig, Settings } from '../../common/types/types';
-import { engineStatus } from '../engine/engine';
+import { engineConfig } from '../engine/engine';
 import { rendererWindow } from '../renderer/renderer';
 import _ from 'lodash';
 
@@ -24,7 +24,7 @@ export function updateRendererConfig() {
 function generateConfig() {
     const settings = store.get('settings') as Settings;
     _.merge(settings, {
-        engine: { status: engineStatus },
+        engine: engineConfig,
     });
 
     return settings;

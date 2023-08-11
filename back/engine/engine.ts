@@ -2,15 +2,18 @@ import { Engine } from 'node-uci';
 import { EventEmitter } from 'node:events';
 import { getConfig, updateRendererConfig } from '../config/config';
 import { rendererWindow } from '../renderer/renderer';
-let engine;
 
+let engine;
 let engineOutputEmitter: EventEmitter;
 
-export let engineStatus = false;
+export let engineConfig = {
+    status: false,
+    name: undefined,
+};
 
 export async function initEngine() {
-    engineStatus = false;
-    if (engineStatus) await engine.quit();
+    engineConfig.status = false;
+    if (engineConfig.status) await engine.quit();
     const engineExePath = getConfig().engine.path;
     if (!engineExePath) return;
     engine = new Engine(engineExePath);
@@ -18,7 +21,8 @@ export async function initEngine() {
         await engine.init();
         await engine.setoption('MultiPV', '3');
         await engine.isready();
-        engineStatus = true;
+        engineConfig.status = true;
+        engineConfig.name = engine.id.name;
         //console.log("engine ready", engine.id, engine.options);
     } catch (e) {
         console.log('Error loading analysis engine');

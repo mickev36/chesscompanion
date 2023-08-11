@@ -1,4 +1,5 @@
 import { useAppContext } from '../../context/AppContext';
+import './SettingsTab.css';
 
 function SettingsTab() {
     const { config } = useAppContext();
@@ -12,21 +13,28 @@ function SettingsTab() {
     return (
         <div className="settings-tab">
             <div className="settings-row">
+                <h1>Chesscompanion Database</h1>
                 <button>
                     <label htmlFor="loadDatabase" className="pgn-upload-button">
                         Load database
                     </label>
                 </button>
+                <b>Database path</b>
                 {config.dbPath}
             </div>
             <div className="settings-row">
+                <h1>Analysis engine configuration</h1>
                 <button>
                     <label htmlFor="loadEngine" className="pgn-upload-button">
-                        Load engine for analysis
+                        Load engine
                     </label>
                 </button>
-                {config.engine.path}
+                <b>Name</b>
+                {config.engine.name}
+                <b>Status</b>
                 {config.engine.status ? 'Ready' : 'Not ready'}
+                <b>Path</b>
+                {config.engine.path}
             </div>
 
             <input type="file" id="loadDatabase" onChange={onSelectDatabase} />
