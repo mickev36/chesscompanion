@@ -22,7 +22,10 @@ export function updateRendererConfig() {
 }
 
 function generateConfig() {
-    const settings = store.get('settings') as Settings;
+    let settings = store.get('settings') as Settings;
+    if(!settings) settings = {
+        engine: {}
+    }
     _.merge(settings, {
         engine: engineConfig,
     });

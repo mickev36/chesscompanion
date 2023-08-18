@@ -16,6 +16,7 @@ export let engineConfig = { ...defaultEngineConfig };
 export async function initEngine() {
     engineConfig = { ...defaultEngineConfig };
     if (engineConfig.status) await engine.quit();
+    
     const engineExePath = getConfig().engine.path;
 
     try {
