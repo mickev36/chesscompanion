@@ -42,6 +42,7 @@ export async function infiniteAnalysis(FEN, isNewGame) {
 
     if (isNewGame) {
         await engine.ucinewgame();
+        await engine.position('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
     }
 
     await engine.isready();
