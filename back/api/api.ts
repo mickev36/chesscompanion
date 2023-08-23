@@ -36,7 +36,7 @@ export async function initApi() {
         initEngine();
     });
 
-    ipcMain.handle('engine:eval', async (event, FEN) => {
+    ipcMain.handle('engine:start', async (event, FEN) => {
         infiniteAnalysis(FEN, true);
     });
 

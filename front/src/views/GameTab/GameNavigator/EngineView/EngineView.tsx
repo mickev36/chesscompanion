@@ -20,7 +20,7 @@ function EngineView() {
     const onToggleEngine = (status: boolean) => {
         setAnalysisEnabled(status);
         if (status) {
-            window.api.call('engine:eval', currentPosition.fen());
+            window.api.call('engine:start', currentPosition.fen());
         } else {
             window.api.call('engine:stop');
         }
