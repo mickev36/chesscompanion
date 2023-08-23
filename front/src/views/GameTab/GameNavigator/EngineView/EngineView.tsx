@@ -70,8 +70,7 @@ function EngineView() {
 
             return (
                 <span key={engineLineIndex} className="engine-line">
-                    {renderEvaluation(currentPosition.turn(), engineLine)}
-                    {continuation}
+                    {renderEvaluation(currentPosition.turn(), engineLine)} {continuation}
                 </span>
             );
         });
