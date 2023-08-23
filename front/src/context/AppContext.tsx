@@ -1,15 +1,16 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { AppConfig, GameData, GameDataState } from '../../../common/types/types';
+import { AppConfig, GameData } from '../../../common/types/types';
 import { newGameData } from '../assets/newGameData';
-import { Chess } from 'chess.js';
+import { Chess, ChessInstance } from 'chess.js';
 import { gameDataToPgn } from '../services/gameDataPgnConversion';
 
 interface AppContextType {
-    gameData: GameDataState;
+    gameData: GameData;
     setGameData: (gameData: GameData) => void;
     config: AppConfig;
     analysisEnabled: boolean;
     setAnalysisEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+    currentPosition: ChessInstance;
 }
 
 export function useAppContext() {
@@ -26,15 +27,19 @@ export const AppContext = createContext<AppContextType>({
     },
     analysisEnabled: false,
     setAnalysisEnabled: () => null,
+    currentPosition: new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'),
 });
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-    const [gameData, setGameDataState] = useState<GameDataState>(newGameData);
+    const [gameData, setGameDataState] = useState<GameData>(newGameData);
     const [config, setConfig] = useState<AppConfig>({
         engine: {
             status: false,
         },
     });
+    const [currentPosition, setCurrentPosition] = useState<ChessInstance>(
+        new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+    );
     const [analysisEnabled, setAnalysisEnabled] = useState<boolean>(false);
 
     //On App Load, fetch the stored settings
@@ -56,7 +61,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         const chess = new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
         // Reset chess.js to selected turn
         chess.load_pgn(gameDataToPgn(gameData));
-        setGameDataState({ ...gameData, currentPosition: chess });
+        setGameDataState(gameData);
+        setCurrentPosition(chess);
         if (analysisEnabled) window.api.call('engine:position', chess.fen());
     }
 
@@ -66,6 +72,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         config,
         analysisEnabled,
         setAnalysisEnabled,
+        currentPosition,
     };
 
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

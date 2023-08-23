@@ -7,20 +7,18 @@ import PromotionPanel, { PromotionData } from './PromotionPanel/PromotionPanel';
 import { useAppContext } from '../../../context/AppContext';
 
 function Chessboard() {
-    const { gameData, setGameData } = useAppContext();
+    const { gameData, setGameData, currentPosition } = useAppContext();
 
     const [promotionData, setPromotionData] = useState<PromotionData | null>(null);
 
     const chessboardRef = useRef<HTMLDivElement>(null);
 
     //Generate the list of legal moves
-    const legalMoves = gameData.currentPosition
-        .moves({ verbose: true })
-        .reduce((acc: any, move) => {
-            if (acc.has(move.from)) acc.set(move.from, [...acc.get(move.from), move.to]);
-            else acc.set(move.from, [move.to]);
-            return acc;
-        }, new Map<cgTypes.Key, cgTypes.Key[]>());
+    const legalMoves = currentPosition.moves({ verbose: true }).reduce((acc: any, move) => {
+        if (acc.has(move.from)) acc.set(move.from, [...acc.get(move.from), move.to]);
+        else acc.set(move.from, [move.to]);
+        return acc;
+    }, new Map<cgTypes.Key, cgTypes.Key[]>());
 
     function moveHandler(orig: cgTypes.Key, dest: cgTypes.Key, capturedPiece?: cgTypes.Piece) {
         const from = orig as Square;
@@ -29,12 +27,12 @@ function Chessboard() {
         if (checkPromotion(from, to)) {
             //Promoting
             setPromotionData({
-                color: gameData.currentPosition.turn(),
+                color: currentPosition.turn(),
                 move: { from, to },
                 selectedPiece: null,
             });
         } else {
-            let parsedMove = gameData.currentPosition.move({ from, to });
+            let parsedMove = currentPosition.move({ from, to });
 
             if (parsedMove) {
                 saveMove(parsedMove);
@@ -48,14 +46,14 @@ function Chessboard() {
                 ...gameData,
                 selectedMove: gameData.moves.length + 1,
                 moves: [...gameData.moves, parsedMove],
-                pgn: gameData.currentPosition.pgn(),
+                pgn: currentPosition.pgn(),
             });
         },
         [gameData, setGameData]
     );
 
     function checkPromotion(from: Square, to: Square) {
-        const beforeMove = gameData.currentPosition.get(from);
+        const beforeMove = currentPosition.get(from);
         return (
             beforeMove?.type === 'p' &&
             ((beforeMove.color === 'w' && from[1] === '7' && to[1] === '8') ||
@@ -70,16 +68,16 @@ function Chessboard() {
             let from = promotionData.move.from,
                 to = promotionData.move.to,
                 piece = promotionData.selectedPiece;
-            if (gameData.currentPosition.get(promotionData.move.to) != null) {
+            if (currentPosition.get(promotionData.move.to) != null) {
                 //Promotion while capturing a piece
-                parsedMove = gameData.currentPosition.move(`${from[0]}x${to}=${piece}`);
-            } else parsedMove = gameData.currentPosition.move(`${to}=${piece}`);
+                parsedMove = currentPosition.move(`${from[0]}x${to}=${piece}`);
+            } else parsedMove = currentPosition.move(`${to}=${piece}`);
             if (parsedMove) {
                 saveMove(parsedMove);
                 setPromotionData(null);
             }
         }
-    }, [promotionData, saveMove, gameData.currentPosition]);
+    }, [promotionData, saveMove, currentPosition]);
 
     return (
         <div className="chessboard" ref={chessboardRef}>
@@ -95,10 +93,10 @@ function Chessboard() {
                     viewOnly:
                         gameData.moves.length !== 0 &&
                         gameData.selectedMove !== gameData.moves.length,
-                    fen: gameData.currentPosition.fen(),
+                    fen: currentPosition.fen(),
                     coordinates: false,
-                    check: gameData.currentPosition.in_check(),
-                    turnColor: gameData.currentPosition.turn() === 'w' ? 'white' : 'black',
+                    check: currentPosition.in_check(),
+                    turnColor: currentPosition.turn() === 'w' ? 'white' : 'black',
                     movable: {
                         free: false,
                         dests: legalMoves,

@@ -20,10 +20,6 @@ export interface GameData {
     boardOrientation: boolean;
 }
 
-export interface GameDataState extends GameData {
-    currentPosition: ChessInstance;
-}
-
 export interface EngineData {
     depth: number;
     seldepth: number;

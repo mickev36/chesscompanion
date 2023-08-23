@@ -8,7 +8,7 @@ import { Chess, Square } from 'chess.js';
 
 function EngineView() {
     const { config } = useAppContext();
-    const { gameData, analysisEnabled, setAnalysisEnabled } = useAppContext();
+    const { gameData, analysisEnabled, setAnalysisEnabled, currentPosition } = useAppContext();
     const [engineData, setEngineData] = useState<EngineData[]>([]);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function EngineView() {
     const onToggleEngine = (status: boolean) => {
         setAnalysisEnabled(status);
         if (status) {
-            window.api.call('engine:eval', gameData.currentPosition.fen());
+            window.api.call('engine:eval', currentPosition.fen());
         } else {
             window.api.call('engine:stop');
         }
@@ -43,8 +43,8 @@ function EngineView() {
     const renderEngineLines = () => {
         return engineData.map((engineLine, engineLineIndex) => {
             const chess = new Chess();
-            chess.load(gameData.currentPosition.fen());
-            const currentMoveCount = gameData.currentPosition.history().length;
+            chess.load(currentPosition.fen());
+            const currentMoveCount = currentPosition.history().length;
             const moves = engineLine.pv.split(' ');
             const continuation = moves
                 .map((moveString, index) => {

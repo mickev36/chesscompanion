@@ -1,7 +1,6 @@
-import { Chess } from 'chess.js';
-import { GameDataState } from '../../../common/types/types';
+import { GameData } from '../../../common/types/types';
 
-export const newGameData: GameDataState = {
+export const newGameData: GameData = {
     id: '',
     whitePlayer: {
         name: 'White',
@@ -20,5 +19,4 @@ export const newGameData: GameDataState = {
     event: '',
     round: '',
     result: '',
-    currentPosition: new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'),
 };

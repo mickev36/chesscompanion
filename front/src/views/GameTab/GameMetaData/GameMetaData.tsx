@@ -6,7 +6,7 @@ import './GameMetaData.css';
 import { useAppContext } from '../../../context/AppContext';
 
 function GameMetaData() {
-    const { gameData, setGameData } = useAppContext();
+    const { gameData, setGameData, currentPosition } = useAppContext();
 
     function changePlayerName(color: 'b' | 'w', name: string) {
         let gameDataUpdated = { ...gameData };
@@ -85,7 +85,7 @@ function GameMetaData() {
                 PGN
                 <textarea rows={4} value={gameData.pgn} onChange={onChangeGamePgn} />
                 FEN
-                <textarea rows={4} value={gameData.currentPosition.fen()} readOnly />
+                <textarea rows={4} value={currentPosition.fen()} readOnly />
             </div>
             <div className="actions">
                 <button onClick={onNewGame}>
