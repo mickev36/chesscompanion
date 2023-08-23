@@ -4,6 +4,7 @@ import './EngineView.css';
 import { EngineData } from '../../../../../../common/types/types';
 import Toggle from '../../../../components/Toggle/Toggle';
 import { useAppContext } from '../../../../context/AppContext';
+import { Chess, Square } from 'chess.js';
 
 function EngineView() {
     const { config } = useAppContext();
@@ -40,15 +41,41 @@ function EngineView() {
     }
 
     const renderEngineLines = () => {
-        return engineData.map((engineLine, index) => {
+        return engineData.map((engineLine, engineLineIndex) => {
+            const chess = new Chess();
+            chess.load(gameData.currentPosition.fen());
+            const currentMoveCount = gameData.currentPosition.history().length;
+            const moves = engineLine.pv.split(' ');
+            const continuation = moves
+                .map((moveString, index) => {
+                    let output = '';
+                    const turn = chess.turn();
+                    chess.move({
+                        from: (moveString[0] + moveString[1]) as Square,
+                        to: (moveString[2] + moveString[3]) as Square,
+                    });
+                    const history = chess.history();
+                    const move = history[history.length - 1];
+
+                    if (turn === 'b') {
+                        if (index === 0)
+                            output += Math.ceil((currentMoveCount + index) / 2) + '...';
+                    } else {
+                        output += Math.ceil((currentMoveCount + index) / 2) + 1 + '. ';
+                    }
+                    output += move;
+                    return output;
+                })
+                .join(' ');
+
             return (
-                <span key={index} className="engine-line">
+                <span key={engineLineIndex} className="engine-line">
                     {engineLine.score.unit === 'mate' ? 'M' : ''}
                     {engineLine.score.unit === 'cp' && engineLine.score.value > 0 ? '+' : ''}
                     {engineLine.score.unit === 'mate'
                         ? engineLine.score.value
-                        : engineLine.score.value / 100}{' '}
-                    {engineLine.pv}
+                        : (engineLine.score.value / 100).toFixed(1)}{' '}
+                    {continuation}
                 </span>
             );
         });
@@ -59,7 +86,11 @@ function EngineView() {
         const bestLine = engineData[0];
         return `${bestLine.score.unit === 'mate' ? 'M' : ''}${
             bestLine.score.unit === 'cp' && engineData[0].score.value > 0 ? '+' : ''
-        }${bestLine.score.unit === 'mate' ? bestLine.score.value : bestLine.score.value / 100}`;
+        }${
+            bestLine.score.unit === 'mate'
+                ? bestLine.score.value
+                : (bestLine.score.value / 100).toFixed(1)
+        }`;
     };
 
     if (!config.engine.status) {
