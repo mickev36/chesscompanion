@@ -70,27 +70,32 @@ function EngineView() {
 
             return (
                 <span key={engineLineIndex} className="engine-line">
-                    {engineLine.score.unit === 'mate' ? 'M' : ''}
-                    {engineLine.score.unit === 'cp' && engineLine.score.value > 0 ? '+' : ''}
-                    {engineLine.score.unit === 'mate'
-                        ? engineLine.score.value
-                        : (engineLine.score.value / 100).toFixed(1)}{' '}
+                    {renderEvaluation(currentPosition.turn(), engineLine)}
                     {continuation}
                 </span>
             );
         });
     };
 
-    const renderEvaluation = () => {
+    const renderEvaluation = (playerToMove: 'w' | 'b', engineData: EngineData) => {
+        if (engineData.score.unit === 'mate') return 'M' + engineData.score.value;
+        else if (engineData.score.unit === 'cp') {
+            //UCI specifies the evaluation from the player's point of view
+            let sign = '';
+            const evalValue = engineData.score.value;
+            if ((evalValue > 0 && playerToMove === 'w') || (evalValue < 0 && playerToMove === 'b'))
+                sign = '+';
+            else sign = '-';
+
+            return sign + Math.abs(evalValue / 100).toFixed(1);
+        }
+    };
+
+    const renderBestEvaluation = () => {
         if (engineData.length === 0) return '';
         const bestLine = engineData[0];
-        return `${bestLine.score.unit === 'mate' ? 'M' : ''}${
-            bestLine.score.unit === 'cp' && engineData[0].score.value > 0 ? '+' : ''
-        }${
-            bestLine.score.unit === 'mate'
-                ? bestLine.score.value
-                : (bestLine.score.value / 100).toFixed(1)
-        }`;
+
+        return renderEvaluation(currentPosition.turn(), bestLine);
     };
 
     if (!config.engine.status) {
@@ -106,7 +111,7 @@ function EngineView() {
             <div className="engine-view__meta">{config.engine.name}</div>
 
             <div className="engine-view__overview">
-                <div className="engine-view__eval">{analysisEnabled && renderEvaluation()}</div>
+                <div className="engine-view__eval">{analysisEnabled && renderBestEvaluation()}</div>
                 <Toggle status={analysisEnabled} onChangeStatus={onToggleEngine} />
             </div>
             <div className="engine-view__lines">{analysisEnabled && renderEngineLines()}</div>
