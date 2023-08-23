@@ -6,6 +6,13 @@ import _ from 'lodash';
 
 const store = new Store();
 
+
+//Create configuration object if none exists
+export function initConfig() {
+    const settings = store.get('settings') as Settings;
+    if(!settings) store.set('settings', {})
+}
+
 export function getConfig() {
     return generateConfig();
 }

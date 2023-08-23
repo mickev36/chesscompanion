@@ -5,6 +5,7 @@ import isDev from 'electron-is-dev';
 import electronReload from 'electron-reload';
 import { createWindow } from './back/renderer/renderer';
 import { initEngine } from './back/engine/engine';
+import { initConfig } from './back/config/config';
 
 if (isDev) {
     electronReload(__dirname, {
@@ -13,6 +14,7 @@ if (isDev) {
 }
 
 app.whenReady().then(async () => {
+    initConfig()
     await initDbConnection();
     await initApi();
     await initEngine();

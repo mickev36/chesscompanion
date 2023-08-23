@@ -1,3 +1,4 @@
+import FileInput from '../../components/FileInput/FileInput';
 import { useAppContext } from '../../context/AppContext';
 import './SettingsTab.css';
 
@@ -6,7 +7,7 @@ function SettingsTab() {
     function onSelectDatabase(event: any) {
         window.api.call('config:set', { dbPath: event.target.files[0].path });
     }
-    function onLoadEngine(event: any) {
+    function onSelectEngine(event: any) {
         window.api.call('engine:updatePath', event.target.files[0].path);
     }
 
@@ -14,21 +15,13 @@ function SettingsTab() {
         <div className="settings-tab">
             <div className="settings-row">
                 <h1>Chesscompanion Database</h1>
-                <button>
-                    <label htmlFor="loadDatabase" className="pgn-upload-button">
-                        Load database
-                    </label>
-                </button>
+                <FileInput onSelect={onSelectDatabase} label="Load Database" />
                 <b>Database path</b>
                 {config.dbPath}
             </div>
             <div className="settings-row">
                 <h1>Analysis engine configuration</h1>
-                <button>
-                    <label htmlFor="loadEngine" className="pgn-upload-button">
-                        Load engine
-                    </label>
-                </button>
+                <FileInput onSelect={onSelectEngine} label="Load Engine" />
                 <b>Name</b>
                 {config.engine.name}
                 <b>Status</b>
@@ -36,10 +29,6 @@ function SettingsTab() {
                 <b>Path</b>
                 {config.engine.path}
             </div>
-
-            <input type="file" id="loadDatabase" onChange={onSelectDatabase} />
-
-            <input type="file" id="loadEngine" onChange={onLoadEngine} />
         </div>
     );
 }
