@@ -8,7 +8,7 @@ import { Chess, Square } from 'chess.js';
 
 function EngineView() {
     const { config } = useAppContext();
-    const { gameData, analysisEnabled, setAnalysisEnabled, currentPosition } = useAppContext();
+    const { analysisEnabled, setAnalysisEnabled, currentPosition } = useAppContext();
     const [engineData, setEngineData] = useState<EngineData[]>([]);
 
     useEffect(() => {

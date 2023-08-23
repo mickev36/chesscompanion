@@ -49,7 +49,7 @@ function Chessboard() {
                 pgn: currentPosition.pgn(),
             });
         },
-        [gameData, setGameData]
+        [gameData, setGameData, currentPosition]
     );
 
     function checkPromotion(from: Square, to: Square) {
