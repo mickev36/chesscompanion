@@ -4,4 +4,5 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    max-width: 20vw;
 }

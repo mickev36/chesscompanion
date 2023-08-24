@@ -24,11 +24,11 @@
 }
 
 .engine-line {
-    display: flex;
+    display: block;
     min-width: 0;
-    flex: 1;
     overflow: hidden;
-    max-width: 15rem;
+    text-overflow: ellipsis;
+    max-width: 100%;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     white-space: nowrap;
