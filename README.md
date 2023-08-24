@@ -1,8 +1,8 @@
-# <img src="https://github.com/mickev36/chesscompanion/blob/readme-update/assets/logo.png?raw=true" width="100" height="100"/> Chess Companion
+# <img src="https://github.com/mickev36/chesscompanion/blob/main/assets/logo.png?raw=true" width="100" height="100"/> Chess Companion
 
 ## Features
 
-<img src="https://github.com/mickev36/chesscompanion/blob/readme-update/assets/screenshot.png?raw=true" width="100%" />
+<img src="https://github.com/mickev36/chesscompanion/blob/main/assets/screenshot.png?raw=true" width="100%" />
 
 -   Manage game database (Load, Edit, Save)
 -   Store metadata (Event, Round, Date, Site, Player's names)
@@ -11,6 +11,7 @@
 ## Development
 
 Roadmap for feature implementation, known bugs... can be found here : https://trello.com/b/mCsVXtsU/chesscompanion
+
 A discord is setup to talk directly with the community and report bugs : https://discord.gg/gWVVCV6W
 
 ### Dependencies
