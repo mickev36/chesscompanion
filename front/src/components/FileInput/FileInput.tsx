@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import './FileInput.css';
 
@@ -8,10 +9,11 @@ interface Props {
 }
 
 function FileInput({ onSelect, label }: Props) {
+    const id = uuidv4();
     return (
-        <label htmlFor="loadDatabase" className="file-input">
+        <label htmlFor={id} className="file-input">
             {label}
-            <input type="file" id="loadDatabase" onChange={onSelect} />
+            <input type="file" id={id} onChange={onSelect} />
         </label>
     );
 }

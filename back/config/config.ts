@@ -18,7 +18,6 @@ export function getConfig() {
 }
 
 export function setSettings(newSettings: SettingsOverride) {
-
     const settings = store.get('settings') as Settings;
     _.merge(settings, newSettings);
     store.set('settings', settings);
