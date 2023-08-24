@@ -11,6 +11,7 @@ if (isDev) {
     electronReload(__dirname, {
         electron: __dirname + '/../../node_modules/.bin/electron',
     });
+    process.traceProcessWarnings = true
 }
 
 app.whenReady().then(async () => {
