@@ -24,6 +24,7 @@ export const AppContext = createContext<AppContextType>({
         engine: {
             status: false,
             isPondering: false,
+            analysisLineCount: 3,
         },
     },
     analysisEnabled: false,
@@ -37,6 +38,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         engine: {
             status: false,
             isPondering: false,
+            analysisLineCount: 3,
         },
     });
     const [currentPosition, setCurrentPosition] = useState<ChessInstance>(

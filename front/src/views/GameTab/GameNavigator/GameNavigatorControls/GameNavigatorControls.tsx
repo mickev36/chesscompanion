@@ -7,10 +7,15 @@ import {
     MdFastForward,
     MdDelete,
     MdRotateLeft,
+    MdSettings,
 } from 'react-icons/md';
 import { useAppContext } from '../../../../context/AppContext';
 
-function GameNavigatorControls() {
+interface Props {
+    toggleSettings: () => void;
+}
+
+function GameNavigatorControls({ toggleSettings }: Props) {
     const { gameData, setGameData } = useAppContext();
 
     const canGoToNextMove = gameData.selectedMove < gameData.moves.length;
@@ -84,6 +89,9 @@ function GameNavigatorControls() {
                 </button>
                 <button onClick={rotateBoard}>
                     <MdRotateLeft />
+                </button>
+                <button onClick={toggleSettings}>
+                    <MdSettings />
                 </button>
             </div>
         </div>

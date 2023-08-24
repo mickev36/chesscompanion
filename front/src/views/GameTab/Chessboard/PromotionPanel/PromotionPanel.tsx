@@ -44,7 +44,7 @@ const PromotionPanel = React.forwardRef(
                 y: renderedBoardData.y,
                 squareSize: renderedBoardData.width / 8,
             });
-        }, [chessboardRef, promotionData.color]);
+        }, [chessboardRef, promotionData.color, promotionData.move.to]);
 
         useEffect(() => {
             updatePromotionPanelData();

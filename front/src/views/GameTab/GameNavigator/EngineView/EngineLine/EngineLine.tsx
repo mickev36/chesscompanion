@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import './EngineLine.css';
 import { EngineData } from '../../../../../../../common/types/types';

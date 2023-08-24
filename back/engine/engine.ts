@@ -1,9 +1,9 @@
 import { Engine } from 'node-uci';
 import { EventEmitter } from 'node:events';
-import { getConfig, updateRendererConfig } from '../config/config';
+import { getConfig, setSettings, updateRendererConfig } from '../config/config';
 import { rendererWindow } from '../renderer/renderer';
 
-let engine: Engine & { id?: { name: string; author: string } };
+let engine: Engine & {id?: { name: string; author: string } };
 let engineOutputEmitter: EventEmitter;
 
 const defaultEngineConfig = {
@@ -11,6 +11,8 @@ const defaultEngineConfig = {
     name: null,
     isPondering: false
 };
+
+let currentFEN = '';
 
 export let engineConfig = { ...defaultEngineConfig };
 
@@ -23,13 +25,15 @@ export async function initEngine() {
     engineConfig = { ...defaultEngineConfig };
     if (engineConfig.status) await engine.quit();
     
-    const engineExePath = getConfig().engine.path;
+    const config = getConfig()
+    const engineExePath = config.engine.path;
+    const analysisLineCount = config.engine.analysisLineCount || 3
 
     try {
         if (!engineExePath) throw 'No engine path';
         engine = new Engine(engineExePath);
         await engine.init();
-        await engine.setoption('MultiPV', '3');
+        await engine.setoption('MultiPV', analysisLineCount.toString());
         await engine.isready();
         engineConfig.status = true;
         engineConfig.name = engine.id.name;
@@ -55,6 +59,7 @@ export async function infiniteAnalysis(FEN, isNewGame) {
 
     await engine.isready();
     await engine.position(FEN);
+    currentFEN = FEN;
     engineOutputEmitter = engine.goInfinite({});
     engineConfig.isPondering = true;
 
@@ -69,6 +74,11 @@ export async function infiniteAnalysis(FEN, isNewGame) {
             }
         }
     });
+}
+
+export async function setAnalysisLineCount(count: number) {
+    setSettings({engine: {analysisLineCount: count}});
+    await engine.setoption('MultiPV', count.toString());
 }
 
 export async function engineStop() {

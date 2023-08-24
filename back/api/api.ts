@@ -1,5 +1,5 @@
 import { addGame, deleteGame, getAllGames, getGame, updateGame } from '../games/games';
-import { initEngine, infiniteAnalysis, engineStop } from '../engine/engine';
+import { initEngine, infiniteAnalysis, engineStop, setAnalysisLineCount } from '../engine/engine';
 import { ipcMain } from 'electron';
 import { getConfig, setSettings } from '../config/config';
 
@@ -42,6 +42,10 @@ export async function initApi() {
 
     ipcMain.handle('engine:position', async (event, FEN) => {
         infiniteAnalysis(FEN, false);
+    });
+
+    ipcMain.handle('engine:setAnalysisLineCount', async (event, count) => {
+        setAnalysisLineCount(count)
     });
 
     ipcMain.handle('engine:stop', async (event, FEN) => {
