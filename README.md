@@ -2,7 +2,7 @@
 
 ## Features
 
-<img src="https://github.com/mickev36/chesscompanion/blob/readme-update/assets/screenshot.png?raw=true" width="700" height="700"/>
+<img src="https://github.com/mickev36/chesscompanion/blob/readme-update/assets/screenshot.png?raw=true" width="100%" />
 
 -   Manage game database (Load, Edit, Save)
 -   Store metadata (Event, Round, Date, Site, Player's names)
