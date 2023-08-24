@@ -1,0 +1,20 @@
+.file-input {
+    color: white;
+    background-color: var(--secondary-bg-color);
+    border: 1px solid white;
+    padding: 0.4rem;
+    text-align: center;
+}
+
+.file-input:hover {
+    cursor: pointer;
+    color: #dddddd;
+}
+
+.file-input:hover {
+    background-color: var(--tertiary-bg-color);
+}
+
+.file-input:active {
+    background-color: var(--secondary-bg-color);
+}

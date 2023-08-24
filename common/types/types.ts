@@ -1,4 +1,4 @@
-import { Move } from 'chess.js';
+import { ChessInstance, Move } from 'chess.js';
 
 interface Player {
     name: string;
@@ -19,3 +19,34 @@ export interface GameData {
     result: string;
     boardOrientation: boolean;
 }
+
+export interface EngineData {
+    depth: number;
+    seldepth: number;
+    time: number;
+    nodes: number;
+    hashfull: number;
+    nps: number;
+    tbhits: number;
+    score: {
+        unit: string;
+        value: number;
+    };
+    multipv: number;
+    pv: string;
+}
+
+export interface Settings {
+    dbPath?: string;
+    engine: {
+        path?: string;
+    };
+}
+
+export type AppConfig = Settings & {
+    engine: {
+        status: boolean;
+        name?: string;
+        isPondering: boolean;
+    };
+};

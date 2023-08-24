@@ -4,4 +4,6 @@ const { contextBridge, ipcRenderer } = require('electron');
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld('api', {
     call: ipcRenderer.invoke,
+    onEngineMessage: callback => ipcRenderer.on('engineData', callback),
+    onConfig: callback => ipcRenderer.on('config', callback),
 });

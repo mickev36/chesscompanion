@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import './DatabaseTab.css';
 
-import { GameData } from '../../../../common/types/types';
-import DatabaseExplorer from '../DatabaseExplorer/DatabaseExplorer';
+import DatabaseExplorer from './DatabaseExplorer/DatabaseExplorer';
 
 interface Props {
-    setLoadedGameData: (gameData: GameData) => void;
-    loadedGameData: GameData;
     setSelectedTabIndex: (index: number) => void;
 }
-function DatabaseTab({ setLoadedGameData, loadedGameData, setSelectedTabIndex }: Props) {
+function DatabaseTab({ setSelectedTabIndex }: Props) {
     const [selectedPgnFile, setSelectedPgnFile] = useState<string>('');
 
     function onSelectPgnFile(event: any) {
@@ -36,11 +33,7 @@ function DatabaseTab({ setLoadedGameData, loadedGameData, setSelectedTabIndex }:
 
                 <input type="file" id="pgn-upload" onChange={onSelectPgnFile} />
             </div>
-            <DatabaseExplorer
-                setLoadedGameData={setLoadedGameData}
-                loadedGameId={loadedGameData.id}
-                changeTab={setSelectedTabIndex}
-            />
+            <DatabaseExplorer changeTab={setSelectedTabIndex} />
         </div>
     );
 }

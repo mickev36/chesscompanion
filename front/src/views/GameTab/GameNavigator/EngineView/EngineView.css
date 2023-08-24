@@ -1,0 +1,36 @@
+.engine-view {
+    background-color: #444444;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    width: 20rem;
+}
+
+.engine-view__overview {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem;
+}
+
+.engine-view__eval {
+    display: flex;
+    color: white;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.engine-view__lines {
+    display: flex;
+    flex-direction: column;
+}
+
+.engine-line {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    white-space: nowrap;
+    border-top: 1px solid var(--main-bg-color)
+}

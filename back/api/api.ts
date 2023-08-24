@@ -1,7 +1,9 @@
 import { addGame, deleteGame, getAllGames, getGame, updateGame } from '../games/games';
+import { initEngine, infiniteAnalysis, engineStop } from '../engine/engine';
 import { ipcMain } from 'electron';
+import { getConfig, setSettings } from '../config/config';
 
-export function initApi() {
+export async function initApi() {
     ipcMain.handle('games:getall', async event => {
         return getAllGames()
             .toJSON()
@@ -27,5 +29,30 @@ export function initApi() {
     ipcMain.handle('game:add', async (event, gameData) => {
         const insertedId = addGame(gameData);
         return insertedId;
+    });
+
+    ipcMain.handle('engine:updatePath', async (event, enginePath) => {
+        setSettings({ engine: { path: enginePath } });
+        initEngine();
+    });
+
+    ipcMain.handle('engine:start', async (event, FEN) => {
+        infiniteAnalysis(FEN, true);
+    });
+
+    ipcMain.handle('engine:position', async (event, FEN) => {
+        infiniteAnalysis(FEN, false);
+    });
+
+    ipcMain.handle('engine:stop', async (event, FEN) => {
+        engineStop();
+    });
+
+    ipcMain.handle('config:set', async (event, settings) => {
+        setSettings(settings);
+    });
+
+    ipcMain.handle('config:get', async event => {
+        return getConfig();
     });
 }

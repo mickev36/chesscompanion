@@ -8,49 +8,45 @@ import {
     MdDelete,
     MdRotateLeft,
 } from 'react-icons/md';
-import { GameData } from '../../../../../../common/types/types';
+import { useAppContext } from '../../../../context/AppContext';
 
-interface Props {
-    gameData: GameData;
-    setLoadedGameData: (gameData: GameData) => void;
-}
+function GameNavigatorControls() {
+    const { gameData, setGameData } = useAppContext();
 
-function GameNavigatorControls({ gameData, setLoadedGameData }: Props) {
     const canGoToNextMove = gameData.selectedMove < gameData.moves.length;
     const canGoToPreviousMove = gameData.selectedMove > 0;
 
     const goToPreviousMove = useCallback(() => {
         if (canGoToPreviousMove)
-            setLoadedGameData({ ...gameData, selectedMove: gameData.selectedMove - 1 });
-    }, [gameData, setLoadedGameData, canGoToPreviousMove]);
+            setGameData({ ...gameData, selectedMove: gameData.selectedMove - 1 });
+    }, [gameData, setGameData, canGoToPreviousMove]);
 
     const goToNextMove = useCallback(() => {
-        if (canGoToNextMove)
-            setLoadedGameData({ ...gameData, selectedMove: gameData.selectedMove + 1 });
-    }, [gameData, setLoadedGameData, canGoToNextMove]);
+        if (canGoToNextMove) setGameData({ ...gameData, selectedMove: gameData.selectedMove + 1 });
+    }, [gameData, setGameData, canGoToNextMove]);
 
     const goToFirstMove = useCallback(() => {
-        setLoadedGameData({ ...gameData, selectedMove: 0 });
-    }, [gameData, setLoadedGameData]);
+        setGameData({ ...gameData, selectedMove: 0 });
+    }, [gameData, setGameData]);
 
     const goToLastMove = useCallback(() => {
-        setLoadedGameData({ ...gameData, selectedMove: gameData.moves.length });
-    }, [gameData, setLoadedGameData]);
+        setGameData({ ...gameData, selectedMove: gameData.moves.length });
+    }, [gameData, setGameData]);
 
     const deleteFromHere = useCallback(() => {
         if (!window.confirm('Are you sure ?')) return;
-        setLoadedGameData({
+        setGameData({
             ...gameData,
             moves: gameData.moves.slice(0, gameData.selectedMove),
         });
-    }, [gameData, setLoadedGameData]);
+    }, [gameData, setGameData]);
 
     const rotateBoard = useCallback(() => {
-        setLoadedGameData({
+        setGameData({
             ...gameData,
             boardOrientation: !gameData.boardOrientation,
         });
-    }, [gameData, setLoadedGameData]);
+    }, [gameData, setGameData]);
 
     useEffect(() => {
         const handleKeyPress = (event: any) => {

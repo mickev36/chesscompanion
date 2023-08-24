@@ -1,59 +1,56 @@
 import React from 'react';
-import { GameData } from '../../../../../common/types/types';
 import { newGameData } from '../../../assets/newGameData';
 import { pgnToGameData } from '../../../services/gameDataPgnConversion';
 import { FaPlus, FaSave } from 'react-icons/fa';
 import './GameMetaData.css';
+import { useAppContext } from '../../../context/AppContext';
 
-interface Props {
-    setLoadedGameData: (gameData: GameData) => void;
-    loadedGameData: GameData;
-}
+function GameMetaData() {
+    const { gameData, setGameData, currentPosition } = useAppContext();
 
-function GameMetaData({ loadedGameData, setLoadedGameData }: Props) {
     function changePlayerName(color: 'b' | 'w', name: string) {
-        let gameDataUpdated = { ...loadedGameData };
+        let gameDataUpdated = { ...gameData };
         if (color === 'w') {
             gameDataUpdated.whitePlayer.name = name;
         } else {
             gameDataUpdated.blackPlayer.name = name;
         }
-        setLoadedGameData(gameDataUpdated);
+        setGameData(gameDataUpdated);
     }
 
     function onNewGame() {
-        setLoadedGameData(newGameData);
+        setGameData(newGameData);
     }
 
     async function onSaveLoadedGame() {
-        if (loadedGameData.id === '') {
+        if (gameData.id === '') {
             //Save new game
-            const insertedGameId = await window.api.call('game:add', loadedGameData);
-            setLoadedGameData({ ...loadedGameData, id: insertedGameId });
+            const insertedGameId = await window.api.call('game:add', gameData);
+            setGameData({ ...gameData, id: insertedGameId });
         } else {
             //Update Game
-            await window.api.call('game:update', loadedGameData);
+            await window.api.call('game:update', gameData);
         }
     }
 
     function setSite(inputEvent: React.ChangeEvent<HTMLInputElement>) {
-        setLoadedGameData({ ...loadedGameData, site: inputEvent.target.value });
+        setGameData({ ...gameData, site: inputEvent.target.value });
     }
 
     function setEvent(inputEvent: React.ChangeEvent<HTMLInputElement>) {
-        setLoadedGameData({ ...loadedGameData, event: inputEvent.target.value });
+        setGameData({ ...gameData, event: inputEvent.target.value });
     }
 
     function setDate(inputEvent: React.ChangeEvent<HTMLInputElement>) {
-        setLoadedGameData({ ...loadedGameData, date: inputEvent.target.value });
+        setGameData({ ...gameData, date: inputEvent.target.value });
     }
 
     function setRound(inputEvent: React.ChangeEvent<HTMLInputElement>) {
-        setLoadedGameData({ ...loadedGameData, round: inputEvent.target.value });
+        setGameData({ ...gameData, round: inputEvent.target.value });
     }
 
     function onChangeGamePgn(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        setLoadedGameData(pgnToGameData(event.target.value));
+        setGameData(pgnToGameData(event.target.value));
     }
 
     return (
@@ -61,16 +58,16 @@ function GameMetaData({ loadedGameData, setLoadedGameData }: Props) {
             <div className="player-info">
                 <textarea
                     className="white-player"
-                    rows={Math.ceil(loadedGameData.whitePlayer.name.length / 12)}
-                    value={loadedGameData.whitePlayer.name}
+                    rows={Math.ceil(gameData.whitePlayer.name.length / 12)}
+                    value={gameData.whitePlayer.name}
                     onChange={event => {
                         changePlayerName('w', event.target.value);
                     }}
                 />
                 <textarea
                     className="black-player"
-                    value={loadedGameData.blackPlayer.name}
-                    rows={Math.ceil(loadedGameData.blackPlayer.name.length / 12)}
+                    value={gameData.blackPlayer.name}
+                    rows={Math.ceil(gameData.blackPlayer.name.length / 12)}
                     onChange={event => {
                         changePlayerName('b', event.target.value);
                     }}
@@ -78,15 +75,17 @@ function GameMetaData({ loadedGameData, setLoadedGameData }: Props) {
             </div>
             <div className="text-info">
                 Site
-                <input type="text" value={loadedGameData.site} onChange={setSite} />
+                <input type="text" value={gameData.site} onChange={setSite} />
                 Event
-                <input type="text" value={loadedGameData.event} onChange={setEvent} />
+                <input type="text" value={gameData.event} onChange={setEvent} />
                 Date
-                <input type="text" value={loadedGameData.date} onChange={setDate} />
+                <input type="text" value={gameData.date} onChange={setDate} />
                 Round
-                <input type="text" value={loadedGameData.round} onChange={setRound} />
+                <input type="text" value={gameData.round} onChange={setRound} />
                 PGN
-                <textarea rows={4} value={loadedGameData.pgn} onChange={onChangeGamePgn} />
+                <textarea rows={4} value={gameData.pgn} onChange={onChangeGamePgn} />
+                FEN
+                <textarea rows={4} value={currentPosition.fen()} readOnly />
             </div>
             <div className="actions">
                 <button onClick={onNewGame}>

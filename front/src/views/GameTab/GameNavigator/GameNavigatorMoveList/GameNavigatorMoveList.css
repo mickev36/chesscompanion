@@ -1,3 +1,11 @@
+
+.game-navigator__move-list {
+    overflow: scroll;
+    height: 100%;
+    width: 100%;
+}
+
+
 .game-navigator__move-list ul {
     list-style-type: none;
     padding: 0;
@@ -52,8 +60,3 @@
 .game-navigator__move-list .move.selected-move:hover {
     background-color: rgb(99, 126, 184);
 }
-
-.game-navigator__move-list {
-    overflow: scroll;
-}
-
