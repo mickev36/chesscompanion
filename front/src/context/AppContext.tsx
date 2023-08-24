@@ -65,7 +65,11 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         chess.load_pgn(gameDataToPgn(gameData));
         setGameDataState(gameData);
         setCurrentPosition(chess);
-        if (analysisEnabled) window.api.call('engine:position', chess.fen());
+
+        if (analysisEnabled) {
+            if (chess.game_over()) window.api.call('engine:position', chess.fen());
+            else window.api.call('engine:position', chess.fen());
+        }
     }
 
     const context: AppContextType = {

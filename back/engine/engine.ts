@@ -42,14 +42,12 @@ export async function initEngine() {
 }
 
 export async function infiniteAnalysis(FEN, isNewGame) {
-    console.log("Start infinite analysis")
     try {
         await engineStop();
     } catch (e) {
         console.log(e)
     }
 
-    console.log("engine stopped")
     if (isNewGame) {
         await engine.ucinewgame();
         await engine.position('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
@@ -61,7 +59,6 @@ export async function infiniteAnalysis(FEN, isNewGame) {
     engineConfig.isPondering = true;
 
     let resultData = [];
-    console.log("Attach event emitter")
     engineOutputEmitter.on('data', data => {
         if (data.multipv) {
             if (data.multipv == 1 && resultData.length) { //A new evaluation is available
@@ -76,7 +73,7 @@ export async function infiniteAnalysis(FEN, isNewGame) {
 
 export async function engineStop() {
     if(engineConfig.isPondering) {
-        engineOutputEmitter.removeAllListeners();
+        engineOutputEmitter.removeAllListeners('data');
         await engine.stop();
         engineConfig.isPondering = false;
     }
