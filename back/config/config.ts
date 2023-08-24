@@ -1,5 +1,5 @@
 import Store from 'electron-store';
-import { Settings } from '../../common/types/types';
+import { Settings, SettingsOverride } from '../../common/types/types';
 import { engineConfig } from '../engine/engine';
 import { rendererWindow } from '../renderer/renderer';
 import _ from 'lodash';
@@ -17,7 +17,8 @@ export function getConfig() {
     return generateConfig();
 }
 
-export function setSettings(newSettings: Settings) {
+export function setSettings(newSettings: SettingsOverride) {
+
     const settings = store.get('settings') as Settings;
     _.merge(settings, newSettings);
     store.set('settings', settings);
@@ -31,7 +32,9 @@ export function updateRendererConfig() {
 function generateConfig() {
     let settings = store.get('settings') as Settings;
     if(!settings) settings = {
-        engine: {}
+        engine: {
+            analysisLineCount: 3
+        }
     }
     _.merge(settings, {
         engine: engineConfig,

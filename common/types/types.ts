@@ -40,6 +40,15 @@ export interface Settings {
     dbPath?: string;
     engine: {
         path?: string;
+        analysisLineCount: number
+    };
+}
+
+export interface SettingsOverride {
+    dbPath?: string;
+    engine?: {
+        path?: string;
+        analysisLineCount?: number
     };
 }
 
