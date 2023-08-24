@@ -5,6 +5,7 @@
 -   Manage game database (Load, Edit, Save)
 -   Store metadata (Event, Round, Date, Site, Player's names)
 -   Load game from pgn
+-   Engine analysis using external executable (Stockfish, Leela, ...)
 
 ## Development
 
