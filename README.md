@@ -1,7 +1,4 @@
-![Chess Companion logo](https://github.com/mickev36/chesscompanion/blob/readme-update/assets/logo.png?raw=true)
-<img src="https://github.com/mickev36/chesscompanion/blob/readme-update/assets/logo.png?raw=true" width="200" height="200"/>
-
-# Chess Companion
+# <img src="https://github.com/mickev36/chesscompanion/blob/readme-update/assets/logo.png?raw=true" width="100" height="100"/> Chess Companion
 
 ## Features
 
