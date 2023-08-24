@@ -4,7 +4,6 @@ import './EngineView.css';
 import { EngineData } from '../../../../../../common/types/types';
 import Toggle from '../../../../components/Toggle/Toggle';
 import { useAppContext } from '../../../../context/AppContext';
-import { Chess, Square } from 'chess.js';
 import renderEvaluation from './renderEvaluation';
 import EngineLine from './EngineLine/EngineLine';
 

@@ -47,5 +47,6 @@ export type AppConfig = Settings & {
     engine: {
         status: boolean;
         name?: string;
+        isPondering: boolean;
     };
 };

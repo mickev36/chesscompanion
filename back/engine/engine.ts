@@ -9,9 +9,15 @@ let engineOutputEmitter: EventEmitter;
 const defaultEngineConfig = {
     status: false,
     name: null,
+    isPondering: false
 };
 
 export let engineConfig = { ...defaultEngineConfig };
+
+// setInterval(() => {
+//     if(!engineOutputEmitter) console.log("No event emitter")
+//     else console.log(engineOutputEmitter.listenerCount('data'))
+// }, 500)
 
 export async function initEngine() {
     engineConfig = { ...defaultEngineConfig };
@@ -36,10 +42,14 @@ export async function initEngine() {
 }
 
 export async function infiniteAnalysis(FEN, isNewGame) {
+    console.log("Start infinite analysis")
     try {
         await engineStop();
-    } catch (e) {}
+    } catch (e) {
+        console.log(e)
+    }
 
+    console.log("engine stopped")
     if (isNewGame) {
         await engine.ucinewgame();
         await engine.position('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
@@ -48,9 +58,10 @@ export async function infiniteAnalysis(FEN, isNewGame) {
     await engine.isready();
     await engine.position(FEN);
     engineOutputEmitter = engine.goInfinite({});
+    engineConfig.isPondering = true;
 
     let resultData = [];
-
+    console.log("Attach event emitter")
     engineOutputEmitter.on('data', data => {
         if (data.multipv) {
             if (data.multipv == 1 && resultData.length) { //A new evaluation is available
@@ -64,8 +75,12 @@ export async function infiniteAnalysis(FEN, isNewGame) {
 }
 
 export async function engineStop() {
-    await engine.stop();
-    engineOutputEmitter.removeAllListeners();
+    if(engineConfig.isPondering) {
+        engineOutputEmitter.removeAllListeners();
+        await engine.stop();
+        engineConfig.isPondering = false;
+    }
+
 }
 
 export async function quitEngine() {
