@@ -53,7 +53,7 @@ export async function infiniteAnalysis(FEN, isNewGame) {
 
     engineOutputEmitter.on('data', data => {
         if (data.multipv) {
-            if (data.multipv == 1) {
+            if (data.multipv == 1 && resultData.length) { //A new evaluation is available
                 rendererWindow.send('engineData', resultData);
                 resultData = [data];
             } else {
