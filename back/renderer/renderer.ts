@@ -17,6 +17,6 @@ export function createWindow() {
         rendererWindow.webContents.openDevTools();
         rendererWindow.loadURL('http://localhost:3000');
     } else {
-        rendererWindow.loadFile(__dirname + '/../front/index.html');
+        rendererWindow.loadFile(__dirname + '/../../../front/index.html');
     }
 }
