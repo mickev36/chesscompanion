@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import './Chessboard.css';
 import { Move, Square } from 'chess.js';
 import ChessgroundWrapper from './ChessgroundWrapper';
@@ -12,6 +12,12 @@ function Chessboard() {
     const [promotionData, setPromotionData] = useState<PromotionData | null>(null);
 
     const chessboardRef = useRef<HTMLDivElement>(null);
+
+    const lastMoveSquares = useMemo(() => {
+        const lastMove = currentPosition.history({ verbose: true }).at(-1);
+        if (!lastMove) return undefined;
+        return [lastMove.from as cgTypes.Key, lastMove.to as cgTypes.Key];
+    }, [currentPosition]);
 
     //Generate the list of legal moves
     const legalMoves = currentPosition.moves({ verbose: true }).reduce((acc: any, move) => {
@@ -95,6 +101,7 @@ function Chessboard() {
                         gameData.selectedMove !== gameData.moves.length,
                     fen: currentPosition.fen(),
                     coordinates: false,
+                    lastMove: lastMoveSquares,
                     check: currentPosition.in_check(),
                     turnColor: currentPosition.turn() === 'w' ? 'white' : 'black',
                     movable: {
