@@ -16,7 +16,7 @@ interface Props {
 }
 
 function GameNavigatorControls({ toggleSettings }: Props) {
-    const { gameData, setGameData } = useAppContext();
+    const { gameData, setGameData, setRuntimeSettings, runtimeSettings } = useAppContext();
 
     const canGoToNextMove = gameData.selectedMove < gameData.moves.length;
     const canGoToPreviousMove = gameData.selectedMove > 0;
@@ -47,9 +47,9 @@ function GameNavigatorControls({ toggleSettings }: Props) {
     }, [gameData, setGameData]);
 
     const rotateBoard = useCallback(() => {
-        setGameData({
-            ...gameData,
-            boardOrientation: !gameData.boardOrientation,
+        setRuntimeSettings({
+            ...runtimeSettings,
+            boardOrientation: !runtimeSettings.boardOrientation,
         });
     }, [gameData, setGameData]);
 

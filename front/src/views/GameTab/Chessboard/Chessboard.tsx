@@ -7,7 +7,7 @@ import PromotionPanel, { PromotionData } from './PromotionPanel/PromotionPanel';
 import { useAppContext } from '../../../context/AppContext';
 
 function Chessboard() {
-    const { gameData, setGameData, currentPosition } = useAppContext();
+    const { gameData, setGameData, currentPosition, runtimeSettings } = useAppContext();
 
     const [promotionData, setPromotionData] = useState<PromotionData | null>(null);
 
@@ -116,7 +116,7 @@ function Chessboard() {
                     events: {
                         move: moveHandler,
                     },
-                    orientation: gameData.boardOrientation ? 'white' : 'black',
+                    orientation: runtimeSettings.boardOrientation ? 'white' : 'black',
                 }}
             />
         </div>

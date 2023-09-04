@@ -9,7 +9,7 @@ import EngineLine from './EngineLine/EngineLine';
 
 function EngineView() {
     const { config } = useAppContext();
-    const { analysisEnabled, setAnalysisEnabled, currentPosition } = useAppContext();
+    const { runtimeSettings, setRuntimeSettings, currentPosition } = useAppContext();
     const [engineData, setEngineData] = useState<EngineData[]>([]);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ function EngineView() {
     }, []);
 
     const onToggleEngine = (status: boolean) => {
-        setAnalysisEnabled(status);
+        setRuntimeSettings({ ...runtimeSettings, analysisEnabled: status });
         if (status) {
             window.api.call('engine:start', currentPosition.fen());
         } else {
@@ -62,12 +62,14 @@ function EngineView() {
             <div className="engine-view__meta">{config.engine.name}</div>
 
             <div className="engine-view__overview">
-                <div className="engine-view__eval">{analysisEnabled && renderBestEvaluation()}</div>
-                <Toggle status={analysisEnabled} onChangeStatus={onToggleEngine} />
+                <div className="engine-view__eval">
+                    {runtimeSettings.analysisEnabled && renderBestEvaluation()}
+                </div>
+                <Toggle status={runtimeSettings.analysisEnabled} onChangeStatus={onToggleEngine} />
             </div>
             <div className="engine-view__lines">
                 {!currentPosition.game_over() &&
-                    analysisEnabled &&
+                    runtimeSettings.analysisEnabled &&
                     engineData.map((engineLine, engineLineIndex) => {
                         return <EngineLine key={engineLineIndex} engineLine={engineLine} />;
                     })}

@@ -1,15 +1,16 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { AppConfig, GameData } from '../../../common/types/types';
+import { AppConfig, GameData, RuntimeSettings } from '../../../common/types/types';
 import { newGameData } from '../assets/newGameData';
 import { Chess, ChessInstance } from 'chess.js';
 import { gameDataToPgn } from '../services/gameDataPgnConversion';
+import { defaultRuntimeSettings } from './defaultRuntimeSettings';
 
 interface AppContextType {
     gameData: GameData;
     setGameData: (gameData: GameData) => void;
     config: AppConfig;
-    analysisEnabled: boolean;
-    setAnalysisEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+    runtimeSettings: RuntimeSettings;
+    setRuntimeSettings: React.Dispatch<React.SetStateAction<RuntimeSettings>>;
     currentPosition: ChessInstance;
 }
 
@@ -27,9 +28,9 @@ export const AppContext = createContext<AppContextType>({
             analysisLineCount: 3,
         },
     },
-    analysisEnabled: false,
-    setAnalysisEnabled: () => null,
     currentPosition: new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'),
+    runtimeSettings: defaultRuntimeSettings,
+    setRuntimeSettings: () => null,
 });
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
@@ -44,7 +45,11 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const [currentPosition, setCurrentPosition] = useState<ChessInstance>(
         new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
     );
-    const [analysisEnabled, setAnalysisEnabled] = useState<boolean>(false);
+
+    const [runtimeSettings, setRuntimeSettings] = useState({
+        analysisEnabled: false,
+        boardOrientation: true,
+    });
 
     //On App Load, fetch the stored settings
     useEffect(() => {
@@ -68,7 +73,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setGameDataState(gameData);
         setCurrentPosition(chess);
 
-        if (analysisEnabled) {
+        if (runtimeSettings.analysisEnabled) {
             if (chess.game_over()) window.api.call('engine:position', chess.fen());
             else window.api.call('engine:position', chess.fen());
         }
@@ -78,8 +83,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         gameData,
         setGameData,
         config,
-        analysisEnabled,
-        setAnalysisEnabled,
+        runtimeSettings,
+        setRuntimeSettings,
         currentPosition,
     };
 
