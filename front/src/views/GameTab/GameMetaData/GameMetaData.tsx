@@ -63,6 +63,7 @@ function GameMetaData() {
                     onChange={event => {
                         changePlayerName('w', event.target.value);
                     }}
+                    spellCheck="false"
                 />
                 <textarea
                     className="black-player"
@@ -71,6 +72,7 @@ function GameMetaData() {
                     onChange={event => {
                         changePlayerName('b', event.target.value);
                     }}
+                    spellCheck="false"
                 />
             </div>
             <div className="text-info">
