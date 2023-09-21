@@ -7,19 +7,19 @@
 
 .player-info {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
 }
 
 .player-info textarea,
 .player-info input {
     resize: none;
     padding: 0.5rem;
-    margin: 1rem;
+    margin-top: 1rem;
     border-width: 3px;
     border-style: solid;
-    width: 30%;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1rem;
+    width: auto;
 }
 
 .player-info .white-player {

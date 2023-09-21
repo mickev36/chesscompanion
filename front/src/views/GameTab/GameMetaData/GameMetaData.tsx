@@ -56,21 +56,23 @@ function GameMetaData() {
     return (
         <div className="game-meta-data">
             <div className="player-info">
-                <textarea
+                <input
+                    type="text"
                     className="white-player"
-                    rows={Math.ceil(gameData.whitePlayer.name.length / 12)}
                     value={gameData.whitePlayer.name}
                     onChange={event => {
                         changePlayerName('w', event.target.value);
                     }}
+                    spellCheck="false"
                 />
-                <textarea
+                <input
+                    type="text"
                     className="black-player"
                     value={gameData.blackPlayer.name}
-                    rows={Math.ceil(gameData.blackPlayer.name.length / 12)}
                     onChange={event => {
                         changePlayerName('b', event.target.value);
                     }}
+                    spellCheck="false"
                 />
             </div>
             <div className="text-info">

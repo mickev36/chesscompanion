@@ -17,7 +17,6 @@ export interface GameData {
     event: string;
     round: string;
     result: string;
-    boardOrientation: boolean;
 }
 
 export interface EngineData {
@@ -40,7 +39,7 @@ export interface Settings {
     dbPath?: string;
     engine: {
         path?: string;
-        analysisLineCount: number
+        analysisLineCount: number;
     };
 }
 
@@ -48,7 +47,7 @@ export interface SettingsOverride {
     dbPath?: string;
     engine?: {
         path?: string;
-        analysisLineCount?: number
+        analysisLineCount?: number;
     };
 }
 
@@ -58,4 +57,9 @@ export type AppConfig = Settings & {
         name?: string;
         isPondering: boolean;
     };
+};
+
+export type RuntimeSettings = {
+    analysisEnabled: boolean;
+    boardOrientation: boolean;
 };
