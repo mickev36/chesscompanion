@@ -76,6 +76,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setCurrentPosition(chess);
 
         //Store result if game is over
+
         if (gameData.selectedMove === gameData.moves.length) {
             if (chess.game_over()) {
                 gameData.result = getGameResult(chess);
