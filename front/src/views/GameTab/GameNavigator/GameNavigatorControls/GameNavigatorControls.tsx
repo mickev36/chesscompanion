@@ -51,7 +51,7 @@ function GameNavigatorControls({ toggleSettings }: Props) {
             ...runtimeSettings,
             boardOrientation: !runtimeSettings.boardOrientation,
         });
-    }, [gameData, setGameData]);
+    }, [runtimeSettings, setRuntimeSettings]);
 
     useEffect(() => {
         const handleKeyPress = (event: any) => {
