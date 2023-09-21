@@ -17,5 +17,5 @@ export const newGameData: GameData = {
     date: '',
     event: '',
     round: '',
-    result: '',
+    result: { winner: '*' },
 };

@@ -3,6 +3,7 @@ import { GameData } from '../../../types/types';
 import { FaFolderOpen, FaTrash } from 'react-icons/fa';
 import './DatabaseExplorer.css';
 import { useAppContext } from '../../../context/AppContext';
+import { renderGameResult } from '../../../services/gameResult';
 
 interface Props {
     changeTab: (index: number) => void;
@@ -60,7 +61,7 @@ function DatabaseExplorer({ changeTab }: Props) {
                                 <td>{game.whitePlayer?.name || 'White'}</td>
                                 <td>{game.blackPlayer?.name || 'Black'}</td>
                                 <td>{renderAbreviatedPgn(game)}</td>
-                                <td>{game.result || '*'}</td>
+                                <td>{renderGameResult(gameData.result)}</td>
                                 <td>{game.date || '?'}</td>
                                 <td>
                                     <button

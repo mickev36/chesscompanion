@@ -1,5 +1,5 @@
 import { Chess } from 'chess.js';
-import { GameData } from '../types/types';
+import { GameData, GameResult } from '../types/types';
 
 export function gameDataToPgn(gameData: GameData) {
     let outPgn = [];
@@ -28,6 +28,7 @@ export function pgnToGameData(pgn: string) {
     chessjs.load_pgn(pgn);
     const headers = chessjs.header();
     const moves = chessjs.history({ verbose: true });
+
     return {
         whitePlayer: {
             title: '' as any,
@@ -46,6 +47,25 @@ export function pgnToGameData(pgn: string) {
         boardOrientation: true,
         id: '',
         pgn,
-        result: headers.Result || '???',
+        result: pgnResultToGameData(headers.Result || '*'),
     };
+}
+
+function pgnResultToGameData(result: string): GameResult {
+    switch (result) {
+        case '1-0':
+            return { winner: 'w' };
+
+        case '0-1':
+            return { winner: 'b' };
+
+        case '1/2-1/2':
+            return { winner: 'draw' };
+
+        case '*':
+            return { winner: '*' };
+
+        default:
+            return { winner: '*' };
+    }
 }

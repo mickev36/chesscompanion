@@ -4,6 +4,7 @@ import { newGameData } from '../assets/newGameData';
 import { Chess, ChessInstance } from 'chess.js';
 import { gameDataToPgn } from '../services/gameDataPgnConversion';
 import { defaultRuntimeSettings } from './defaultRuntimeSettings';
+import getGameResult from '../services/gameResult';
 
 interface AppContextType {
     gameData: GameData;
@@ -68,11 +69,22 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
     function setGameData(gameData: GameData) {
         const chess = new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+
         // Reset chess.js to selected turn
         chess.load_pgn(gameDataToPgn(gameData));
         setGameDataState(gameData);
         setCurrentPosition(chess);
 
+        //Store result if game is over
+        if (gameData.selectedMove === gameData.moves.length) {
+            if (chess.game_over()) {
+                gameData.result = getGameResult(chess);
+            } else {
+                gameData.result = { winner: '*' };
+            }
+        }
+
+        //Update position on engine if enabled
         if (runtimeSettings.analysisEnabled) {
             if (chess.game_over()) window.api.call('engine:position', chess.fen());
             else window.api.call('engine:position', chess.fen());
