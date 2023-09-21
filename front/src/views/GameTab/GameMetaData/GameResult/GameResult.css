@@ -1,4 +1,12 @@
 .game-result {
     text-align : center;
     font-size: 3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.result-termination {
+    margin-top: 1rem;
+    font-style: italic;
+    font-size: 1rem;
 }
