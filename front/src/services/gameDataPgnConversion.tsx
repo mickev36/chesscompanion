@@ -1,5 +1,5 @@
 import { Chess } from 'chess.js';
-import { GameData } from '../../../common/types/types';
+import { GameData } from '../types/types';
 
 export function gameDataToPgn(gameData: GameData) {
     let outPgn = [];

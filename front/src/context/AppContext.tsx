@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { AppConfig, GameData, RuntimeSettings } from '../../../common/types/types';
+import { AppConfig, GameData, RuntimeSettings } from '../types/types';
 import { newGameData } from '../assets/newGameData';
 import { Chess, ChessInstance } from 'chess.js';
 import { gameDataToPgn } from '../services/gameDataPgnConversion';

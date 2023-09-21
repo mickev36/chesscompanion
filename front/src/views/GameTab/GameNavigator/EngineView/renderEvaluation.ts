@@ -1,4 +1,4 @@
-import { EngineData } from "../../../../../../common/types/types";
+import { EngineData } from '../../../../types/types';
 
 export default function renderEvaluation(playerToMove: 'w' | 'b', engineData: EngineData) {
     if (engineData.score.unit === 'mate') return 'M' + engineData.score.value;
@@ -12,4 +12,4 @@ export default function renderEvaluation(playerToMove: 'w' | 'b', engineData: En
 
         return sign + Math.abs(evalValue / 100).toFixed(1);
     }
-};
+}

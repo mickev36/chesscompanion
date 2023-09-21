@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import './EngineView.css';
-import { EngineData } from '../../../../../../common/types/types';
+import { EngineData } from '../../../../types/types';
 import Toggle from '../../../../components/Toggle/Toggle';
 import { useAppContext } from '../../../../context/AppContext';
 import renderEvaluation from './renderEvaluation';

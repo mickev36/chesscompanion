@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './EngineLine.css';
-import { EngineData } from '../../../../../../../common/types/types';
+import { EngineData } from '../../../../../types/types';
 import { useAppContext } from '../../../../../context/AppContext';
 import { Chess, Square } from 'chess.js';
 import renderEvaluation from '../renderEvaluation';

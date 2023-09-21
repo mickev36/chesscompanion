@@ -1,4 +1,4 @@
-import { ChessInstance, Move } from 'chess.js';
+import { Move } from 'chess.js';
 
 interface Player {
     name: string;
