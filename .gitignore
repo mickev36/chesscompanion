@@ -8,9 +8,6 @@
 # testing
 **/coverage
 
-# production
-/build
-
 # misc
 .DS_Store
 .env.local
@@ -24,6 +21,5 @@ yarn-error.log*
 
 
 **dist**
-**build**
 **back-js**
 **front-build**

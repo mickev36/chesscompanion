@@ -21,13 +21,14 @@
     },
     "homepage": "https://github.com/mickev36/chesscompanion#readme",
     "build": {
-        "appId": "your.id",
+        "appId": "com.chesscompanion",
         "linux": {
             "maintainer": "Kévin Michelet",
             "target": [
                 "AppImage",
                 "deb"
-            ]
+            ],
+            "category": "Game"
         },
         "files": [
             "package.json",
