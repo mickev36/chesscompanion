@@ -1,16 +1,15 @@
 import Store from 'electron-store';
-import { Settings, SettingsOverride } from '../../common/types/types';
+import { Settings, SettingsOverride } from '../../front/src/types/types';
 import { engineConfig } from '../engine/engine';
 import { rendererWindow } from '../renderer/renderer';
 import _ from 'lodash';
 
 const store = new Store();
 
-
 //Create configuration object if none exists
 export function initConfig() {
     const settings = store.get('settings') as Settings;
-    if(!settings) store.set('settings', {})
+    if (!settings) store.set('settings', {});
 }
 
 export function getConfig() {
@@ -30,11 +29,12 @@ export function updateRendererConfig() {
 
 function generateConfig() {
     let settings = store.get('settings') as Settings;
-    if(!settings) settings = {
-        engine: {
-            analysisLineCount: 3
-        }
-    }
+    if (!settings)
+        settings = {
+            engine: {
+                analysisLineCount: 3,
+            },
+        };
     _.merge(settings, {
         engine: engineConfig,
     });

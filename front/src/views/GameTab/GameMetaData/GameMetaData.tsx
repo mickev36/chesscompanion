@@ -4,6 +4,7 @@ import { pgnToGameData } from '../../../services/gameDataPgnConversion';
 import { FaPlus, FaSave } from 'react-icons/fa';
 import './GameMetaData.css';
 import { useAppContext } from '../../../context/AppContext';
+import GameResult from './GameResult/GameResult';
 
 function GameMetaData() {
     const { gameData, setGameData, currentPosition } = useAppContext();
@@ -75,6 +76,7 @@ function GameMetaData() {
                     spellCheck="false"
                 />
             </div>
+            <GameResult />
             <div className="text-info">
                 Site
                 <input type="text" value={gameData.site} onChange={setSite} />

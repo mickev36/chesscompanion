@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import './GameNavigatorSettings.css';
 import { useAppContext } from '../../../../context/AppContext';
+import Tooltip from '../../../../components/Tooltip/Tooltip';
 
 function GameNavigatorSettings() {
     const { config } = useAppContext();
@@ -14,7 +15,8 @@ function GameNavigatorSettings() {
 
     return (
         <div className="game-navigator__settings">
-            Analysis lines : {engineLineCount} / 5
+            Engine analysis lines : {engineLineCount} / 5
+            <Tooltip content={'Number of analysis lines for the engine'} />
             <input
                 type="range"
                 onChange={changeEngineLineCount}

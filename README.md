@@ -9,6 +9,8 @@
 -   Load game from pgn
 -   Engine analysis using external executable (Stockfish, Leela, ...)
 
+** WARNING : This project is still in a very early stage and under heavy development. Do NOT use it for critical data ! Things will change and break frequently, and bugs are still a common occurence. **
+
 ## Development
 
 Roadmap for feature implementation, known bugs... can be found here : https://trello.com/b/mCsVXtsU/chesscompanion

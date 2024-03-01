@@ -1,4 +1,4 @@
-import { ChessInstance, Move } from 'chess.js';
+import { Move } from 'chess.js';
 
 interface Player {
     name: string;
@@ -16,7 +16,7 @@ export interface GameData {
     date: string;
     event: string;
     round: string;
-    result: string;
+    result: GameResult;
 }
 
 export interface EngineData {
@@ -63,3 +63,17 @@ export type RuntimeSettings = {
     analysisEnabled: boolean;
     boardOrientation: boolean;
 };
+
+export interface GameResult {
+    winner: 'w' | 'b' | '*' | 'draw';
+    termination?:
+        | 'checkmate'
+        | 'stalemate'
+        | 'threeFoldRepetition'
+        | 'insufficientMaterial'
+        // Below : TODO
+        | 'timeout'
+        | 'resignation'
+        | 'fiftyMoveRule'
+        | 'agreement';
+}

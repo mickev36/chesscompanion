@@ -1,4 +1,4 @@
-import { RuntimeSettings } from '../../../common/types/types';
+import { RuntimeSettings } from '../types/types';
 
 export const defaultRuntimeSettings: RuntimeSettings = {
     analysisEnabled: false,

@@ -1,4 +1,4 @@
-import { GameData } from '../../../common/types/types';
+import { GameData } from '../types/types';
 
 export const newGameData: GameData = {
     id: '',
@@ -17,5 +17,5 @@ export const newGameData: GameData = {
     date: '',
     event: '',
     round: '',
-    result: '',
+    result: { winner: '*' },
 };

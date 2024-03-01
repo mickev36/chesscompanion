@@ -84,7 +84,6 @@ function Chessboard() {
             }
         }
     }, [promotionData, saveMove, currentPosition]);
-
     return (
         <div className="chessboard" ref={chessboardRef}>
             {promotionData && (
@@ -94,11 +93,13 @@ function Chessboard() {
                     ref={chessboardRef}
                 />
             )}
+
             <ChessgroundWrapper
                 config={{
                     viewOnly:
-                        gameData.moves.length !== 0 &&
-                        gameData.selectedMove !== gameData.moves.length,
+                        (gameData.moves.length !== 0 &&
+                            gameData.selectedMove !== gameData.moves.length) ||
+                        gameData.result.winner !== '*',
                     fen: currentPosition.fen(),
                     coordinates: false,
                     lastMove: lastMoveSquares,

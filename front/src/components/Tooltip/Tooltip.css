@@ -1,0 +1,22 @@
+.tooltip-icon {
+    border: none;
+    background-color: var(--tertiary-bg-color);
+    border-radius: 10rem;
+    margin-left: 0.5rem;
+    padding: 0.3rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.tooltip-icon:hover {
+    cursor:help;
+}
+
+.tooltip {
+    z-index: 9999;
+    background-color: var(--tertiary-bg-color) !important;
+    opacity: 1 !important;
+    padding: 1rem !important;
+    font-size: 1rem !important;
+    font-weight: normal !important;
+}

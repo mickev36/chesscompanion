@@ -1,7 +1,7 @@
-import { EngineData } from "../../../../../../common/types/types";
+import { EngineData } from '../../../../types/types';
 
 export default function renderEvaluation(playerToMove: 'w' | 'b', engineData: EngineData) {
-    if (engineData.score.unit === 'mate') return 'M' + engineData.score.value;
+    if (engineData.score.unit === 'mate') return 'M' + Math.abs(engineData.score.value);
     else if (engineData.score.unit === 'cp') {
         //UCI specifies the evaluation from the player's point of view
         let sign = '';
@@ -12,4 +12,4 @@ export default function renderEvaluation(playerToMove: 'w' | 'b', engineData: En
 
         return sign + Math.abs(evalValue / 100).toFixed(1);
     }
-};
+}
