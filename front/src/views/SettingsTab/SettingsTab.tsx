@@ -1,4 +1,5 @@
 import FileInput from '../../components/FileInput/FileInput';
+import Tooltip from '../../components/Tooltip/Tooltip';
 import { useAppContext } from '../../context/AppContext';
 import './SettingsTab.css';
 
@@ -20,7 +21,10 @@ function SettingsTab() {
                 {config.dbPath}
             </div>
             <div className="settings-row">
-                <h1>Analysis engine configuration</h1>
+                <h1>
+                    Analysis engine configuration{' '}
+                    <Tooltip content="Download an analysis engine binary (Stockfish, Lc0, ...) and load it here" />
+                </h1>
                 <FileInput onSelect={onSelectEngine} label="Load Engine" />
                 <b>Name</b>
                 {config.engine.name}
