@@ -5,11 +5,11 @@ import './SettingsTab.css';
 
 function SettingsTab() {
     const { config } = useAppContext();
-    function onSelectDatabase(event: any) {
-        window.api.call('config:set', { dbPath: event.target.files[0].path });
+    function onSelectDatabase(path: string) {
+        window.api.call('config:set', { dbPath: path });
     }
-    function onSelectEngine(event: any) {
-        window.api.call('engine:updatePath', event.target.files[0].path);
+    function onSelectEngine(path: string) {
+        window.api.call('engine:updatePath', path);
     }
 
     return (
