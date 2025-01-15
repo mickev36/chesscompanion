@@ -3,35 +3,23 @@ import React, { useEffect, useState } from 'react';
 import './DatabaseTab.css';
 
 import DatabaseExplorer from './DatabaseExplorer/DatabaseExplorer';
+import FileInput from '../../components/FileInput/FileInput';
 
 interface Props {
     setSelectedTabIndex: (index: number) => void;
 }
 function DatabaseTab({ setSelectedTabIndex }: Props) {
-    const [selectedPgnFile, setSelectedPgnFile] = useState<string>('');
 
-    function onSelectPgnFile(event: any) {
-        // Update the state
-        setSelectedPgnFile(event.target.files[0]);
+
+    function onSelectPgnFile(path: any) {
+        window.api.call('engine:updatePath', path);
     }
 
-    useEffect(() => {
-        if (selectedPgnFile !== '') {
-            //uploadPgnDb(selectedPgnFile);
-            setSelectedPgnFile('');
-        }
-    }, [setSelectedPgnFile, selectedPgnFile]);
 
     return (
         <div className="database-tab">
             <div className="database-actions">
-                <button>
-                    <label htmlFor="pgn-upload" className="pgn-upload-button">
-                        Load pgn database
-                    </label>
-                </button>
-
-                <input type="file" id="pgn-upload" onChange={onSelectPgnFile} />
+                <FileInput label="Load PGN File/Database" onSelect={onSelectPgnFile} />
             </div>
             <DatabaseExplorer changeTab={setSelectedTabIndex} />
         </div>

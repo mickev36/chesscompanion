@@ -1,4 +1,5 @@
 import { addGame, deleteGame, getAllGames, getGame, updateGame } from '../games/games';
+import { importGames } from '../games/import';
 import { initEngine, infiniteAnalysis, engineStop, setAnalysisLineCount } from '../engine/engine';
 import { ipcMain } from 'electron';
 import { getConfig, setSettings } from '../config/config';
@@ -25,6 +26,10 @@ export async function initApi() {
     ipcMain.handle('game:update', async (event, gameData) => {
         updateGame(gameData);
     });
+
+    ipcMain.handle('game:import', async (event, path) => {
+        importGames(path);
+    })
 
     ipcMain.handle('game:add', async (event, gameData) => {
         const insertedId = addGame(gameData);
