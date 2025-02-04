@@ -16,34 +16,47 @@ export function importGames(path) {
     let importedGamesCounter = 0;
 
     const splitDistinctGames = new Transform({
+        objectMode: true,
         transform(chunk, encoding, callback) {
             buffer += chunk.toString();
-            const separatorPosition = buffer.indexOf('[HashCode "', 1)
-            if (separatorPosition > 0) { //Game processable
+            let separatorPosition = buffer.indexOf('[HashCode "', 1)
+            let distinctGames = []
+            while (separatorPosition > 0) { //At least 1 game processable
                 const currentGame = buffer.substring(0, separatorPosition); //Store the game for processing
                 buffer = buffer.substring(separatorPosition); //Remove the game from the buffer
-                callback(null, currentGame)
+                separatorPosition = buffer.indexOf('[HashCode "', 1) //Seek the next game
+                distinctGames.push(currentGame)
             }
+            callback(null, distinctGames)
         }
     })
 
 
 
-    const processImportGame = new Stream.Writable();
+    const processImportGame = new Stream.Writable({
+        objectMode: true
+    });
+
+    //TODO : Bulk write to DB
     processImportGame._write = (chunk, encoding, next) => {
-        addGameFromPgn(chunk.toString());
-        importedGamesCounter++;
+        chunk.forEach(element => {
+            addGameFromPgn(element);
+        });
+        importedGamesCounter += chunk.length;
         next()
 
     }
 
-
-    pgnExtract.stdout.pipe(splitDistinctGames).pipe(processImportGame)
+    pgnExtract.on('close', () => {
+        console.log("pgn extract ended")
+    })
 
     processImportGame.on('finish', () => {
         //TODO : Load Last Game still in buffer
         console.log(`Done importing ${importedGamesCounter} games.`)
     })
 
+
+    pgnExtract.stdout.pipe(splitDistinctGames).pipe(processImportGame)
 
 }
