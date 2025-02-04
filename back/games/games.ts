@@ -51,26 +51,13 @@ export function updateGame(gameData) {
     });
 }
 
-export function loadPgnDb(file: Buffer) {
-    // console.log(file.toString());
-    // const pgnArray = file.toString().split('\n\n[');
-    // const parsedPgn = [];
-    // pgnArray.forEach(pgn => {
-    //     pgn = '[' + pgn;
-    //     parsedPgn.push(pgnToGameData(pgn));
-    // });
-    // return dbConnection.write(() => {
-    //     parsedPgn.forEach(pgn => {
-    //         dbConnection.create('Game', { ...pgn, id: new BSON.ObjectId() });
-    //     });
-    // });
-}
 
 function pgnToGameData(pgn: string) {
     const chessjs = new Chess();
     chessjs.loadPgn(pgn);
     const headers = chessjs.header();
     const moves = chessjs.history({ verbose: true });
+
     return {
         whitePlayer: {
             title: '' as any,
@@ -89,5 +76,6 @@ function pgnToGameData(pgn: string) {
         id: '',
         pgn,
         result: headers.Result || '???',
+        termination: headers.Termination
     };
 }
