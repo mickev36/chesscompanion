@@ -67,12 +67,37 @@ export type RuntimeSettings = {
 
 export type GameResult = '1-0' | '0-1' | '*' | '1/2-1/2'
 
-export type GameTermination = 'checkmate'
-    | 'stalemate'
-    | 'threeFoldRepetition'
-    | 'insufficientMaterial'
-    // Below : TODO
-    | 'timeout'
-    | 'resignation'
-    | 'fiftyMoveRule'
-    | 'agreement';
+export type GameTermination = 'Abandoned'
+    | 'Abjudication'
+    | 'Emergency'
+    | 'Normal'
+    | 'Rules infraction'
+    | 'Time forfeit'
+    | 'Unterminated';
+
+// export type GameTermination = 'checkmate'
+// | 'stalemate'
+// | 'threeFoldRepetition'
+// | 'insufficientMaterial'
+// // Below : TODO
+// | 'timeout'
+// | 'resignation'
+// | 'fiftyMoveRule'
+// | 'agreement';
+
+// case 'checkmate':
+//     return 'Checkmate';
+// case 'agreement':
+//     return 'By agreement';
+// case 'fiftyMoveRule':
+//     return '50 move rule';
+// case 'insufficientMaterial':
+//     return 'Insufficient Material';
+// case 'resignation':
+//     return 'By resignation';
+// case 'stalemate':
+//     return 'Stalemate';
+// case 'threeFoldRepetition':
+//     return 'Three-fold repetition';
+// case 'timeout':
+//     return 'Timeout';

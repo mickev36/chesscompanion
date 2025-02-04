@@ -4,7 +4,6 @@ import { newGameData } from '../assets/newGameData';
 import { Chess } from 'chess.js';
 import { gameDataToPgn } from '../services/gameDataPgnConversion';
 import { defaultRuntimeSettings } from './defaultRuntimeSettings';
-import getGameResult from '../services/gameResult';
 
 interface AppContextType {
     gameData: GameData;
@@ -74,13 +73,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         chess.loadPgn(gameDataToPgn(gameData));
         setGameDataState(gameData);
         setCurrentPosition(chess);
-
-        //Store result if game is over
-        // if (gameData.selectedMove === gameData.moves.length) {
-        //     const gameResult = getGameResult(chess)
-        //     gameData.result = gameResult.result;
-        //     gameData.termination = gameResult.termination;
-        // }
 
         //Update position on engine if enabled
         if (runtimeSettings.analysisEnabled) {

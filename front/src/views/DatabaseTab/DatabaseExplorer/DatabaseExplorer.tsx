@@ -49,6 +49,7 @@ function DatabaseExplorer({ changeTab }: Props) {
                         <td>Black</td>
                         <td>Pgn</td>
                         <td>Result</td>
+                        <td>Termination</td>
                         <td>Date</td>
                         <td>Actions</td>
                     </tr>
@@ -61,6 +62,7 @@ function DatabaseExplorer({ changeTab }: Props) {
                                 <td>{game.blackPlayer?.name || 'Black'}</td>
                                 <td>{renderAbreviatedPgn(game)}</td>
                                 <td>{game.result}</td>
+                                <td>{game.termination}</td>
                                 <td>{game.date || '?'}</td>
                                 <td>
                                     <button

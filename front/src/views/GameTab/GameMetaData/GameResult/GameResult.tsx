@@ -1,33 +1,21 @@
 import React from 'react';
 import './GameResult.css';
 import { useAppContext } from '../../../../context/AppContext';
+import { Chess } from 'chess.js';
 
 function GameResult() {
     const { gameData } = useAppContext();
 
 
     function renderResultTermination() {
-        if (gameData.result === '*') return '';
-        switch (gameData.termination) {
-            case 'checkmate':
-                return 'Checkmate';
-            case 'agreement':
-                return 'By agreement';
-            case 'fiftyMoveRule':
-                return '50 move rule';
-            case 'insufficientMaterial':
-                return 'Insufficient Material';
-            case 'resignation':
-                return 'By resignation';
-            case 'stalemate':
-                return 'Stalemate';
-            case 'threeFoldRepetition':
-                return 'Three-fold repetition';
-            case 'timeout':
-                return 'Timeout';
-            default:
-                return '';
-        }
+        if (gameData.termination !== "Normal") return gameData.termination;
+        const chessInstance = new Chess();
+        chessInstance.loadPgn(gameData.pgn) //Load the whole game to compute termination
+        if (chessInstance.isCheckmate()) return "Checkmate";
+        if (chessInstance.isThreefoldRepetition()) return "Three fold repetition"
+        if (chessInstance.isInsufficientMaterial()) return "Insufficient Material"
+        if (chessInstance.isStalemate()) return "Stalemate"
+        return "Resignation"
     }
 
     return (
