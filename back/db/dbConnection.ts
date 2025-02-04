@@ -17,3 +17,13 @@ export async function initDbConnection() {
 export async function closeDbConnection() {
     await dbConnection.close();
 }
+
+export async function purgeDatabase() {
+
+    dbConnection.write(() => {
+        const objects = dbConnection.objects('Game')
+        dbConnection.delete(objects)
+    });
+
+    console.log("done")
+}

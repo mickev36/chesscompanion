@@ -3,6 +3,7 @@ import { importGames } from '../games/import';
 import { initEngine, infiniteAnalysis, engineStop, setAnalysisLineCount } from '../engine/engine';
 import { ipcMain } from 'electron';
 import { getConfig, setSettings } from '../config/config';
+import { purgeDatabase } from '../db/dbConnection';
 
 export async function initApi() {
     ipcMain.handle('games:getall', async event => {
@@ -63,5 +64,9 @@ export async function initApi() {
 
     ipcMain.handle('config:get', async event => {
         return getConfig();
+    });
+
+    ipcMain.handle('db:purge', async event => {
+        return purgeDatabase();
     });
 }

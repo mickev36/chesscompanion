@@ -8,14 +8,16 @@ export function importGames(path) {
         '--addhashcode',
         '-R/home/mickev/dev/chesscompanion/chesscompanion/bin/tagsroster',
         path
-    ])
+    ], {
+        stdio: ['pipe', 'pipe', 'ignore']
+    })
 
     let buffer = "";
+    let importedGamesCounter = 0;
 
     const splitDistinctGames = new Transform({
         transform(chunk, encoding, callback) {
             buffer += chunk.toString();
-            console.log(".")
             const separatorPosition = buffer.indexOf('[HashCode "', 1)
             if (separatorPosition > 0) { //Game processable
                 const currentGame = buffer.substring(0, separatorPosition); //Store the game for processing
@@ -30,21 +32,17 @@ export function importGames(path) {
     const processImportGame = new Stream.Writable();
     processImportGame._write = (chunk, encoding, next) => {
         addGameFromPgn(chunk.toString());
-        console.log("Game imported successfully")
+        importedGamesCounter++;
         next()
 
     }
+
 
     pgnExtract.stdout.pipe(splitDistinctGames).pipe(processImportGame)
 
     pgnExtract.on('close', (code) => {
         //TODO : Load Last Game still in buffer
-        console.log("Done Importing games")
-    })
-
-    pgnExtract.on('exit', (code) => {
-        //TODO : Load Last Game still in buffer
-        console.log("Finished importing games")
+        console.log(`Done importing ${importedGamesCounter} games.`)
     })
 
 }

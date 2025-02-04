@@ -15,11 +15,16 @@ function DatabaseTab({ setSelectedTabIndex }: Props) {
         window.api.call('game:import', path);
     }
 
+    function onPurgeDatabase(path: any) {
+        window.api.call('db:purge');
+    }
+
 
     return (
         <div className="database-tab">
             <div className="database-actions">
                 <FileInput label="Load PGN File/Database" onSelect={onSelectPgnFile} />
+                <button onClick={onPurgeDatabase}>Purge database</button>
             </div>
             <DatabaseExplorer changeTab={setSelectedTabIndex} />
         </div>

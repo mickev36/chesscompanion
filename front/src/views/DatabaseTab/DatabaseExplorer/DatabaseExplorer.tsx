@@ -20,6 +20,7 @@ function DatabaseExplorer({ changeTab }: Props) {
 
     async function fetchGames() {
         const games = await window.api.call('games:getall');
+        console.log("Found " + games.length + " games")
         setGames(games);
     }
 
