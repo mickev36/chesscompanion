@@ -5,6 +5,7 @@ import ChessgroundWrapper from './ChessgroundWrapper';
 import * as cgTypes from 'chessground/types';
 import PromotionPanel, { PromotionData } from './PromotionPanel/PromotionPanel';
 import { useAppContext } from '../../../context/AppContext';
+import { GameResult } from '../../../types/types';
 
 function Chessboard() {
     const { gameData, setGameData, currentPosition, runtimeSettings } = useAppContext();
@@ -48,8 +49,39 @@ function Chessboard() {
 
     const saveMove = useCallback(
         (parsedMove: Move) => {
+            let gameResult = gameData.result
+            let gameTermination = gameData.termination;
+            //Update the pgn to account for game result
+            if (gameData.selectedMove === gameData.moves.length && currentPosition.isGameOver()) {
+                if (currentPosition.isCheckmate()) {
+                    let result: GameResult = '1-0'
+                    if (currentPosition.turn() === "w") {
+                        result = "0-1"
+                    }
+
+                    currentPosition.loadPgn(currentPosition.pgn().replace('*', result))
+                    currentPosition.setHeader('Result', result)
+                    gameResult = result;
+                    gameTermination = "Normal";
+                }
+                else if (
+                    currentPosition.isThreefoldRepetition() ||
+                    currentPosition.isStalemate() ||
+                    currentPosition.isDrawByFiftyMoves() ||
+                    currentPosition.isDraw() ||
+                    currentPosition.isInsufficientMaterial()) {
+                    currentPosition.loadPgn(currentPosition.pgn().replace('*', '1/2-1/2'))
+                    currentPosition.setHeader('Result', '1/2-1/2')
+                    gameResult = "1/2-1/2"
+                    currentPosition.setHeader('Termination', 'Normal')
+                    gameTermination = "Normal"
+                }
+
+            }
             setGameData({
                 ...gameData,
+                result: gameResult,
+                termination: gameTermination,
                 selectedMove: gameData.moves.length + 1,
                 moves: [...gameData.moves, parsedMove],
                 pgn: currentPosition.pgn(),

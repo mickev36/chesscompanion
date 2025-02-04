@@ -74,6 +74,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setGameDataState(gameData);
         setCurrentPosition(chess);
 
+
         //Update position on engine if enabled
         if (runtimeSettings.analysisEnabled) {
             //TODO : WTF ??

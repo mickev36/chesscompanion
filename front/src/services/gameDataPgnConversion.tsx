@@ -10,6 +10,7 @@ export function gameDataToPgn(gameData: GameData) {
     outPgn.push(`[White "${gameData.whitePlayer.name || '???'}"]`);
     outPgn.push(`[Black "${gameData.blackPlayer.name || '???'}"]`);
     outPgn.push(`[Result "${gameData.result || '???'}"]`);
+    outPgn.push(`[Termination "${gameData.termination || '???'}"]`);
     outPgn.push('');
     let SAN = '';
 
