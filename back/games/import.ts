@@ -15,13 +15,13 @@ export function importGames(path) {
     const splitDistinctGames = new Transform({
         transform(chunk, encoding, callback) {
             buffer += chunk.toString();
+            console.log(".")
             const separatorPosition = buffer.indexOf('[HashCode "', 1)
             if (separatorPosition > 0) { //Game processable
                 const currentGame = buffer.substring(0, separatorPosition); //Store the game for processing
                 buffer = buffer.substring(separatorPosition); //Remove the game from the buffer
                 callback(null, currentGame)
             }
-            else callback(null, null)
         }
     })
 
@@ -30,7 +30,9 @@ export function importGames(path) {
     const processImportGame = new Stream.Writable();
     processImportGame._write = (chunk, encoding, next) => {
         addGameFromPgn(chunk.toString());
+        console.log("Game imported successfully")
         next()
+
     }
 
     pgnExtract.stdout.pipe(splitDistinctGames).pipe(processImportGame)
@@ -38,6 +40,11 @@ export function importGames(path) {
     pgnExtract.on('close', (code) => {
         //TODO : Load Last Game still in buffer
         console.log("Done Importing games")
+    })
+
+    pgnExtract.on('exit', (code) => {
+        //TODO : Load Last Game still in buffer
+        console.log("Finished importing games")
     })
 
 }
