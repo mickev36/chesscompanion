@@ -40,9 +40,10 @@ export function importGames(path) {
 
     pgnExtract.stdout.pipe(splitDistinctGames).pipe(processImportGame)
 
-    pgnExtract.on('close', (code) => {
+    processImportGame.on('finish', () => {
         //TODO : Load Last Game still in buffer
         console.log(`Done importing ${importedGamesCounter} games.`)
     })
+
 
 }
