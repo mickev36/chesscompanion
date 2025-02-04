@@ -76,6 +76,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
         //Update position on engine if enabled
         if (runtimeSettings.analysisEnabled) {
+            //TODO : WTF ??
             if (chess.isGameOver()) window.api.call('engine:position', chess.fen());
             else window.api.call('engine:position', chess.fen());
         }
