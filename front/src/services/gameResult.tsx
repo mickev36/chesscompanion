@@ -1,30 +1,22 @@
 import { Chess } from 'chess.js';
-import { GameResult } from '../types/types';
+import { GameResult, GameTermination } from '../types/types';
 
-export default function getGameResult(chessInstance: Chess): GameResult {
-    const winner = chessInstance.turn() === 'w' ? 'b' : 'w';
+export default function getGameResult(chessInstance: Chess): { result: GameResult, termination?: GameTermination } {
 
-    if (chessInstance.isCheckmate()) return { winner, termination: 'checkmate' };
+    if (!chessInstance.isGameOver()) {
+        return { result: '*' }
+    }
+
+    const result = chessInstance.turn() === 'w' ? '0-1' : '1-0';
+
+    if (chessInstance.isCheckmate()) return { result, termination: 'checkmate' };
     if (chessInstance.isThreefoldRepetition())
-        return { winner: 'draw', termination: 'threeFoldRepetition' };
+        return { result: '1/2-1/2', termination: 'threeFoldRepetition' };
     if (chessInstance.isInsufficientMaterial())
-        return { winner: 'draw', termination: 'insufficientMaterial' };
-    if (chessInstance.isStalemate()) return { winner: 'draw', termination: 'stalemate' };
+        return { result: '1/2-1/2', termination: 'insufficientMaterial' };
+    if (chessInstance.isStalemate()) return { result: '1/2-1/2', termination: 'stalemate' };
 
     return {
-        winner: '*',
+        result: '*',
     };
-}
-
-export function renderGameResult(result: GameResult) {
-    switch (result.winner) {
-        case 'w':
-            return '1 - 0';
-        case 'b':
-            return '0 - 1';
-        case 'draw':
-            return '1/2 - 1/2';
-        default:
-            return '';
-    }
 }

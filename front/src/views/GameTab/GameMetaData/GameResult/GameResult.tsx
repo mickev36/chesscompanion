@@ -1,18 +1,14 @@
 import React from 'react';
 import './GameResult.css';
 import { useAppContext } from '../../../../context/AppContext';
-import { renderGameResult } from '../../../../services/gameResult';
 
 function GameResult() {
     const { gameData } = useAppContext();
 
-    function renderResult() {
-        return renderGameResult(gameData.result);
-    }
 
     function renderResultTermination() {
-        if (gameData.result.winner === '*') return '';
-        switch (gameData.result.termination) {
+        if (gameData.result === '*') return '';
+        switch (gameData.termination) {
             case 'checkmate':
                 return 'Checkmate';
             case 'agreement':
@@ -29,12 +25,14 @@ function GameResult() {
                 return 'Three-fold repetition';
             case 'timeout':
                 return 'Timeout';
+            default:
+                return '';
         }
     }
 
     return (
         <div className="game-result">
-            {renderResult()}
+            {gameData.result}
             <span className="result-termination">{renderResultTermination()}</span>
         </div>
     );

@@ -99,7 +99,7 @@ function Chessboard() {
                     viewOnly:
                         (gameData.moves.length !== 0 &&
                             gameData.selectedMove !== gameData.moves.length) ||
-                        gameData.result.winner !== '*',
+                        gameData.result !== '*',
                     fen: currentPosition.fen(),
                     coordinates: false,
                     lastMove: lastMoveSquares,

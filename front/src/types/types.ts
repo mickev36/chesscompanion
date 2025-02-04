@@ -17,6 +17,7 @@ export interface GameData {
     event: string;
     round: string;
     result: GameResult;
+    termination?: GameTermination;
 }
 
 export interface EngineData {
@@ -64,16 +65,14 @@ export type RuntimeSettings = {
     boardOrientation: boolean;
 };
 
-export interface GameResult {
-    winner: 'w' | 'b' | '*' | 'draw';
-    termination?:
-        | 'checkmate'
-        | 'stalemate'
-        | 'threeFoldRepetition'
-        | 'insufficientMaterial'
-        // Below : TODO
-        | 'timeout'
-        | 'resignation'
-        | 'fiftyMoveRule'
-        | 'agreement';
-}
+export type GameResult = '1-0' | '0-1' | '*' | '1/2-1/2'
+
+export type GameTermination = 'checkmate'
+    | 'stalemate'
+    | 'threeFoldRepetition'
+    | 'insufficientMaterial'
+    // Below : TODO
+    | 'timeout'
+    | 'resignation'
+    | 'fiftyMoveRule'
+    | 'agreement';

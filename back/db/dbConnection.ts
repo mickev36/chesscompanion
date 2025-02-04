@@ -1,5 +1,5 @@
 import Realm from 'realm';
-import { Game, GameResult, Move, Player } from '../types/schemas';
+import { Game, Move, Player } from '../types/schemas';
 import { app } from 'electron';
 
 export let dbConnection: Realm;
@@ -7,7 +7,7 @@ export let dbConnection: Realm;
 export async function initDbConnection() {
     dbConnection = await Realm.open({
         path: app.getPath('appData') + '/chesscompaniondb',
-        schema: [Game, Move, Player, GameResult],
+        schema: [Game, Move, Player],
     });
     process.on('exit', function () {
         dbConnection.close();

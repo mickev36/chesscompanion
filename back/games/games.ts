@@ -8,11 +8,12 @@ export function getAllGames() {
 
 export function addGameFromPgn(pgn: string) {
     const game = pgnToGameData(pgn)
-    console.log(game)
     addGame(game)
 }
 
 export function addGame(game) {
+    console.log("****************")
+    console.log(game)
     let task;
     let id = new BSON.ObjectId();
     dbConnection.write(() => {

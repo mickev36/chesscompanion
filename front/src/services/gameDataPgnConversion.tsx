@@ -47,25 +47,6 @@ export function pgnToGameData(pgn: string) {
         boardOrientation: true,
         id: '',
         pgn,
-        result: pgnResultToGameData(headers.Result || '*'),
+        result: (headers.Result || '*') as GameResult,
     };
-}
-
-function pgnResultToGameData(result: string): GameResult {
-    switch (result) {
-        case '1-0':
-            return { winner: 'w' };
-
-        case '0-1':
-            return { winner: 'b' };
-
-        case '1/2-1/2':
-            return { winner: 'draw' };
-
-        case '*':
-            return { winner: '*' };
-
-        default:
-            return { winner: '*' };
-    }
 }

@@ -78,11 +78,9 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         //Store result if game is over
 
         if (gameData.selectedMove === gameData.moves.length) {
-            if (chess.isGameOver()) {
-                gameData.result = getGameResult(chess);
-            } else {
-                gameData.result = { winner: '*' };
-            }
+            const gameResult = getGameResult(chess)
+            gameData.result = gameResult.result;
+            gameData.termination = gameResult.termination;
         }
 
         //Update position on engine if enabled

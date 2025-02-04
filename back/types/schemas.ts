@@ -12,17 +12,9 @@ export const Game: ObjectSchema = {
         date: 'string?',
         event: 'string?',
         round: 'string?',
-        result: 'GameResult',
-        pgn: 'string',
-    },
-};
-
-export const GameResult: ObjectSchema = {
-    name: 'GameResult',
-    embedded: true,
-    properties: {
-        winner: 'string',
+        result: 'string',
         termination: 'string?',
+        pgn: 'string',
     },
 };
 
