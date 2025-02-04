@@ -42,7 +42,7 @@ function EngineView() {
     }
 
     const renderBestEvaluation = () => {
-        if (currentPosition.game_over()) return '-';
+        if (currentPosition.isGameOver()) return '-';
         if (engineData.length === 0) return '';
         const bestLine = engineData[0];
 
@@ -68,7 +68,7 @@ function EngineView() {
                 <Toggle status={runtimeSettings.analysisEnabled} onChangeStatus={onToggleEngine} />
             </div>
             <div className="engine-view__lines">
-                {!currentPosition.game_over() &&
+                {!currentPosition.isGameOver() &&
                     runtimeSettings.analysisEnabled &&
                     engineData.map((engineLine, engineLineIndex) => {
                         return <EngineLine key={engineLineIndex} engineLine={engineLine} />;

@@ -69,7 +69,7 @@ export function loadPgnDb(file: Buffer) {
 
 function pgnToGameData(pgn: string) {
     const chessjs = new Chess();
-    chessjs.load_pgn(pgn);
+    chessjs.loadPgn(pgn);
     const headers = chessjs.header();
     const moves = chessjs.history({ verbose: true });
     return {

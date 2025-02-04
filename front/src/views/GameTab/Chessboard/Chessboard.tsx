@@ -103,7 +103,7 @@ function Chessboard() {
                     fen: currentPosition.fen(),
                     coordinates: false,
                     lastMove: lastMoveSquares,
-                    check: currentPosition.in_check(),
+                    check: currentPosition.inCheck(),
                     turnColor: currentPosition.turn() === 'w' ? 'white' : 'black',
                     movable: {
                         free: false,

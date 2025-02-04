@@ -1,15 +1,15 @@
-import { ChessInstance } from 'chess.js';
+import { Chess } from 'chess.js';
 import { GameResult } from '../types/types';
 
-export default function getGameResult(chessInstance: ChessInstance): GameResult {
+export default function getGameResult(chessInstance: Chess): GameResult {
     const winner = chessInstance.turn() === 'w' ? 'b' : 'w';
 
-    if (chessInstance.in_checkmate()) return { winner, termination: 'checkmate' };
-    if (chessInstance.in_threefold_repetition())
+    if (chessInstance.isCheckmate()) return { winner, termination: 'checkmate' };
+    if (chessInstance.isThreefoldRepetition())
         return { winner: 'draw', termination: 'threeFoldRepetition' };
-    if (chessInstance.insufficient_material())
+    if (chessInstance.isInsufficientMaterial())
         return { winner: 'draw', termination: 'insufficientMaterial' };
-    if (chessInstance.in_stalemate()) return { winner: 'draw', termination: 'stalemate' };
+    if (chessInstance.isStalemate()) return { winner: 'draw', termination: 'stalemate' };
 
     return {
         winner: '*',

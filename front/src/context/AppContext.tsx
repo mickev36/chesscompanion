@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { AppConfig, GameData, RuntimeSettings } from '../types/types';
 import { newGameData } from '../assets/newGameData';
-import { Chess, ChessInstance } from 'chess.js';
+import { Chess } from 'chess.js';
 import { gameDataToPgn } from '../services/gameDataPgnConversion';
 import { defaultRuntimeSettings } from './defaultRuntimeSettings';
 import getGameResult from '../services/gameResult';
@@ -12,7 +12,7 @@ interface AppContextType {
     config: AppConfig;
     runtimeSettings: RuntimeSettings;
     setRuntimeSettings: React.Dispatch<React.SetStateAction<RuntimeSettings>>;
-    currentPosition: ChessInstance;
+    currentPosition: Chess;
 }
 
 export function useAppContext() {
@@ -43,7 +43,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
             analysisLineCount: 3,
         },
     });
-    const [currentPosition, setCurrentPosition] = useState<ChessInstance>(
+    const [currentPosition, setCurrentPosition] = useState<Chess>(
         new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
     );
 
@@ -71,14 +71,14 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         const chess = new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
 
         // Reset chess.js to selected turn
-        chess.load_pgn(gameDataToPgn(gameData));
+        chess.loadPgn(gameDataToPgn(gameData));
         setGameDataState(gameData);
         setCurrentPosition(chess);
 
         //Store result if game is over
 
         if (gameData.selectedMove === gameData.moves.length) {
-            if (chess.game_over()) {
+            if (chess.isGameOver()) {
                 gameData.result = getGameResult(chess);
             } else {
                 gameData.result = { winner: '*' };
@@ -87,7 +87,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
         //Update position on engine if enabled
         if (runtimeSettings.analysisEnabled) {
-            if (chess.game_over()) window.api.call('engine:position', chess.fen());
+            if (chess.isGameOver()) window.api.call('engine:position', chess.fen());
             else window.api.call('engine:position', chess.fen());
         }
     }

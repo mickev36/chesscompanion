@@ -1,9 +1,12 @@
-import { ShortMove } from 'chess.js';
 import React, { useCallback, useEffect, useState } from 'react';
 import './PromotionPanel.css';
+import { Square } from 'chess.js';
 
 export interface PromotionData {
-    move: ShortMove;
+    move: {
+        from: Square,
+        to: Square
+    };
     color: 'b' | 'w';
     selectedPiece: PromotionPiece;
 }

@@ -25,7 +25,7 @@ export function gameDataToPgn(gameData: GameData) {
 
 export function pgnToGameData(pgn: string) {
     const chessjs = new Chess();
-    chessjs.load_pgn(pgn);
+    chessjs.loadPgn(pgn);
     const headers = chessjs.header();
     const moves = chessjs.history({ verbose: true });
 
