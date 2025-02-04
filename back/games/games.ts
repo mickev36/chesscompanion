@@ -12,8 +12,6 @@ export function addGameFromPgn(pgn: string) {
 }
 
 export function addGame(game) {
-    console.log("****************")
-    console.log(game)
     let task;
     let id = new BSON.ObjectId();
     dbConnection.write(() => {

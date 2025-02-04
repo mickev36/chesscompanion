@@ -36,6 +36,7 @@ export function importGames(path) {
     pgnExtract.stdout.pipe(splitDistinctGames).pipe(processImportGame)
 
     pgnExtract.on('close', (code) => {
+        //TODO : Load Last Game still in buffer
         console.log("Done Importing games")
     })
 
