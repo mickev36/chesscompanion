@@ -76,12 +76,11 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setCurrentPosition(chess);
 
         //Store result if game is over
-
-        if (gameData.selectedMove === gameData.moves.length) {
-            const gameResult = getGameResult(chess)
-            gameData.result = gameResult.result;
-            gameData.termination = gameResult.termination;
-        }
+        // if (gameData.selectedMove === gameData.moves.length) {
+        //     const gameResult = getGameResult(chess)
+        //     gameData.result = gameResult.result;
+        //     gameData.termination = gameResult.termination;
+        // }
 
         //Update position on engine if enabled
         if (runtimeSettings.analysisEnabled) {

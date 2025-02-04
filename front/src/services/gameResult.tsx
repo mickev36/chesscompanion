@@ -4,6 +4,8 @@ import { GameResult, GameTermination } from '../types/types';
 export default function getGameResult(chessInstance: Chess): { result: GameResult, termination?: GameTermination } {
 
     if (!chessInstance.isGameOver()) {
+        console.log(chessInstance.pgn())
+        console.log("Game pas finie")
         return { result: '*' }
     }
 
