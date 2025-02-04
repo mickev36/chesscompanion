@@ -12,7 +12,7 @@ function DatabaseTab({ setSelectedTabIndex }: Props) {
 
 
     function onSelectPgnFile(path: any) {
-        window.api.call('engine:updatePath', path);
+        window.api.call('game:import', path);
     }
 
 

@@ -1,9 +1,15 @@
-//import { Chess } from 'chess.js';
+import { Chess } from 'chess.js';
 import { BSON } from 'realm';
 import { dbConnection } from '../db/dbConnection';
 
 export function getAllGames() {
     return dbConnection.objects('Game');
+}
+
+export function addGameFromPgn(pgn: string) {
+    const game = pgnToGameData(pgn)
+    console.log(game)
+    addGame(game)
 }
 
 export function addGame(game) {
@@ -62,27 +68,27 @@ export function loadPgnDb(file: Buffer) {
 }
 
 function pgnToGameData(pgn: string) {
-    // const chessjs = new Chess();
-    // chessjs.load_pgn(pgn);
-    // const headers = chessjs.header();
-    // const moves = chessjs.history({ verbose: true });
-    // return {
-    //     whitePlayer: {
-    //         title: '' as any,
-    //         name: headers.White || 'White',
-    //     },
-    //     blackPlayer: {
-    //         title: '' as any,
-    //         name: headers.Black || 'Black',
-    //     },
-    //     moves,
-    //     event: headers.Event || '???',
-    //     date: headers.Date || '???',
-    //     site: headers.Site || '???',
-    //     round: headers.Round || '???',
-    //     selectedMove: moves.length,
-    //     id: '',
-    //     pgn,
-    //     result: headers.Result || '???',
-    // };
+    const chessjs = new Chess();
+    chessjs.load_pgn(pgn);
+    const headers = chessjs.header();
+    const moves = chessjs.history({ verbose: true });
+    return {
+        whitePlayer: {
+            title: '' as any,
+            name: headers.White || 'White',
+        },
+        blackPlayer: {
+            title: '' as any,
+            name: headers.Black || 'Black',
+        },
+        moves,
+        event: headers.Event || '???',
+        date: headers.Date || '???',
+        site: headers.Site || '???',
+        round: headers.Round || '???',
+        selectedMove: moves.length,
+        id: '',
+        pgn,
+        result: headers.Result || '???',
+    };
 }
